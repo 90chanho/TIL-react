@@ -265,3 +265,202 @@ const fn1 = () => () 이런식으로 작성이 되어있는데,
 ---
 
 ## 1주차 - 수요일
+
+### [ VS Code 개발 도구 확장 ]
+- Prettier
+- Formatting Toggle
+- React Snippets
+- React Pure To Class
+- Auto Import
+- Import Cost
+- Auto Complete
+- Bracket Pair Colorizer2
+- Color Highlight & Manager
+- Image preview
+- Translator
+
+### [ 미숙한 ES6 학습  - Promise ]
+프로미스?
+```
+- 프로미스 객체는 비동기 작업이 맞이할 미래의 성공 또는 실패와 그 결과 값을 나타낸다
+- 프로미스는 매개변수로 resolve와 reject을 받는다
+- 비동기 작업이 제대로 이행된다면 resolve를 호출하고, 어떠한 이유로 에러가 발생한다면 reject를 호출한다.
+```
+
+프로미스 생성자, new 생성자로 생성한다
+```
+const 변수명 = new Promise((resolve, reject)=>{});
+```
+
+프로미스의 상태값
+```
+fending(대기)   : 연산이 이행되거나 거부되지 않은 상태
+fulfilled(이행) : 연산이 성공적으로 실행된 상태
+rejected(거부)  : 연산이 어떠한 이유로 실패한 상태
+```
+
+프로미스 메서드
+```
+Promise.all(iterable)
+: 다수의 프로미스를 병렬처리 할 수 있다
+: 모든 프로미스가 성공했을 경우 모든 프로미스 연산이 끝난 후에 각 프로미스들의 값들로 이루어진 이행 값을 반환한다.
+: 중간에 실패한 프로미스 연산이 있을 경우 실패한 프로미스를 즉시 반환한다.
+
+Promise.race(iterable)
+: 다수의 프로미스 중 가장 먼저 이행되거나 거절된 프로미스를 반환한다.
+
+Promise.resolve()
+: 주어진 이유로 이행하는 Promise 객체를 반환
+
+Promise.reject()
+: 주어진 이유로 거부하는 Promise 객체를 반환
+```
+
+프로미스 프로토타입 메서드(인스턴스 메서드)
+```
+Promise.prototype.then()
+: 프로미스가 성공적으로 이행됐을 경우 resolve의 값을 받아 실행할 수 있다
+
+Promise.prototype.catch()
+: 프로미스가 어떠한 이유로 거부되었을 경우 reject이 값을 받아 실행할 수 있다
+
+Promise.prototype.finally()
+: 프로미스의 결과 여부와 관계 없이 프로미스가 처리되면 콜백 함수 실행
+```
+
+프로미스 체인(Promise Chain) : 이행된 결과에 대해 연속적인 프로미스 실행
+```
+const promise = new Promise((resolve, reject)=> {
+  resolve(1) // 이행(fulfilled) 상태라 가정하여 resolve 함수를 호출하고 숫자 1을 넘겨줌
+})
+
+promise.then(res => {
+  console.log(res) // 1, 프로미스 객체의 resolve 함수에서 전달된 값
+  return (res + 1)
+}).then(res => {
+  console.log(res) // 2, 첫번째 then()에서 return된 결과 값
+  return (res + 1)
+}).then(res => {
+  console.log(res) // 3, 두번째 then()에서 return된 결과 값
+})
+```
+
+프로미스 체인 작업 중 에러가 발생할 경우 처리는 catch() 한 번 작성하면 된다
+```
+promise.then(res => {
+  console.log(res) // 1, 프로미스 객체의 resolve 함수에서 전달된 값
+  return (res + 1)
+}).then(res => {
+  throw Error('두번째 then()에서 에러 발생')
+}).then(res => {
+  console.log(res) // 3, 두번째 then()에서 return된 결과 값
+}).catch(error => {
+  console.log(error)
+}).finally(() => {
+  console.log('콜백 함수 실행')
+})
+
+// 1
+// Error: '두번째 then()에서 에러 발생'
+// 콜백 함수 실행
+```
+
+예제 - Promise.all() - 모두 성공
+```
+const promise = new Promise((resolve, reject)=> {
+  resolve(1)
+})
+const promise2 = new Promise((resolve, reject)=> {
+  resolve(2)
+})
+const promise3 = new Promise((resolve, reject)=> {
+  resolve(3)
+})
+const promiseAll = Promise.all([promise, promise2, promise3])
+
+promiseAll.then(res => {
+  console.log(res) // [1,2,3]
+})
+```
+예제 - Promise.all() - 중간 실패
+```
+const promise = new Promise((resolve, reject)=> {
+  resolve(1)
+})
+const promise2 = new Promise((resolve, reject)=> {
+  reject('실패!')
+})
+const promise3 = new Promise((resolve, reject)=> {
+  resolve(3)
+})
+const promiseAll = Promise.all([promise, promise2, promise3])
+
+promiseAll.then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+
+// '실패!'
+```
+
+예제 - Promise.race() - 모두 성공 일 경우
+```
+const promise = new Promise((resolve, reject)=> {
+  setTimeout(()=>{
+    resolve('0.002초')
+  },1002)
+})
+const promise2 = new Promise((resolve, reject)=> {
+  setTimeout(()=>{
+    resolve('0.001초')
+  },1001)
+})
+const promise3 = new Promise((resolve, reject)=> {
+  setTimeout(()=>{
+    resolve('0.003초')
+  },1003)
+})
+const promiseRace = Promise.race([promise, promise2, promise3])
+
+promiseRace.then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+
+// 0.001초
+```
+
+예제 - Promise.race() - 실패 케이스가 있는 경우
+```
+const promise = new Promise((resolve, reject)=> {
+  setTimeout(()=>{
+    resolve('0.002초')
+  },1002)
+})
+const promise2 = new Promise((resolve, reject)=> {
+  setTimeout(()=>{
+    resolve('0.001초')
+  },1001)
+})
+const promise3 = new Promise((resolve, reject)=> {
+  setTimeout(()=>{
+    resolve('0.003초')
+  },1003)
+})
+const promise4 = new Promise((resolve, reject)=> {
+  setTimeout(()=>{
+    reject('거절')
+  },1000)
+})
+const promiseRace = Promise.race([promise, promise2, promise3, promise4])
+
+promiseRace.then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+
+// '거절'
+```
