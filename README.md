@@ -7,8 +7,13 @@
 - GitHub 저장소에 변경 사항 커밋 후 푸시
 
 ---
+<details>
+<summary>
 
 ## 1주차 - 월요일 학습
+
+</summary>
+<div>
 
 ### [React 학습에 앞서 공부해야 할 것들]
 
@@ -134,10 +139,19 @@ class 클래스명 extends 참조할 클래스 {
 - class는 호이스트 되지 않는다.
 - 관례적으로 \_(언더스코어)로 시작으로하는 변수명은 비공개(Private) 데이터를 의미한다.
 - class를 참조할 때, 상위 클래스와 하위 클래스 모두 constructor가 있다면, 하위 클래스의 constructor에서 반드시 super()를 호출함으로써 상위클래스의 constructor를 실행시켜야 한다.
+</div>
+</details>
 
 ---
 
+<details>
+<summary>
+
 ## 1주차 - 화요일 학습
+
+</summary>
+<div>
+
 
 ### [ React 소개 ]
 학습 완료
@@ -262,9 +276,18 @@ const fn1 = () => () 이런식으로 작성이 되어있는데,
 </div>
 ```
 
+</div>
+</details>
+
 ---
 
-## 1주차 - 수요일
+<details>
+<summary>
+
+## 1주차 - 수요일 학습
+
+</summary>
+<div>
 
 ### [ VS Code 개발 도구 확장 ]
 - Prettier
@@ -464,3 +487,142 @@ promiseRace.then(res => {
 
 // '거절'
 ```
+
+</div>
+</details>
+
+---
+
+<details>
+<summary>
+
+## 1주차 - 목요일 학습
+
+</summary>
+<div></div>
+
+## [ Virtual DOM ]
+
+가상 DOM 구성과 원리
+```
+구성
+- h.js (virtual-hyperscript) : 가상 DOM tree 생성
+- createElement.js : 가상 DOM을 실제 DOM으로 생성하여 실제 DOM에 장착(mount)
+- diff.js : 이전/이후 상태를 비교하여 변경사항이 있는지 체크
+- patch.js : 변경사항이 발생한 DOM을 실제 DOM 다시 붙임
+```
+
+가상 DOM을 사용하는 이유
+```
+UI는 사용자의 요구에 따라 변해야 하는데, UI가 변경되기 위해 실제 DOM이 다시 렌더링 되는 과정은 컨텐츠가 많을수록 속도가 느려진다.
+가상 DOM을 사용할 경우 '상태'를 이전과 비교하여 변경사항이 있으면 해당 부분의 실제 DOM만 업데이트(patch)하므로 보다 속도가 빠르다. 
+```
+
+## [ JSX -> React 요소 ]
+
+JSX란?
+```
+- JavaScript Syntax eXtension의 약자. 자바스크립트 언어의 확장
+- 구문이 HTML과 유사하다.(HTMl의 문법을 따르는 것은 아님)
+```
+
+JSX -> React 요소
+JSX는 HTML과 유사한 문법을 사용해 React Element(실제 요소는 아니고 자바스크립트 객체)를 만들 수 있도록 한다.
+```
+const reactEl = (
+  <h1 className="title">리액트 엘리먼트</h1>
+)
+```
+
+바벨은 JSX 코드를 컴파일하여 React Element 객체를 생성한다.
+React는 이 객체를 읽어 들여 가상 DOM을 구성하고, 필요에 따라 실제 DOM에 장착(mount)하여 렌더링 될 수 있도록 한다
+```
+var headElement = React.createElement(
+  'h1',
+  { className: 'title' },
+  '리액트 엘리먼트'
+)
+```
+
+[ 정리 ]
+- JSX는 필수는 아니지만 권고 사항 (편리성, 가독성)
+- 리액트 엘리먼트는 '자바스크립트 객체'이다. DOM 요소가 아니다
+- 리액트는 리액트 엘리먼트를 읽어 '가상 DOM'을 구성한다
+
+## [미숙한 ES6 문법 학습 - fetch]
+
+fetch란?
+```
+- Fetch API를 이용하면 Request나 Response와 같은 HTTP의 파이프라인을 구성하는 요소를 조작하는것이 가능하다.
+- fetch() 메서드를 이용하는 것으로 비동기 네트워크 통신을 알기쉽게 기술할 수 있다.
+```
+
+fetch 기본 스펙
+```
+- fetch()로 부터 반환되는 Promise 객체는 HTTP error 상태(HTTP Statue Code : 404 | 500)를 reject하지 않는다.
+  대신 ok 상태가 'false'인 'resolve'가 반환되며, 네트워크 장애나 요청이 완료되지 못한 상태에는 reject가 반환된다.
+
+- 보통 fetch는 쿠키를 보내거나 받지 않는다. 
+- 쿠키를 전송하기 위해서는 자격증명(credentials) 옵션을 반드시 설정해야 한다.(기본 자격증명(credentials) 정책은 same-origin.)
+```
+
+fetch 문법
+```
+fetch(url, { init })
+  .then(res => {
+    if (res.ok) {
+      // 통신 성공
+    } else {
+      // 통신 실패
+    }
+  })
+  .catch(err => {
+    // 네트워크 장애
+  })
+```
+
+예제 - 자격 증명(credentials)이 포함된 Request 요청
+```
+fetch('https://example.com', {
+  credentials: 'include' // 자격 증명이 포함된 인증서를 보내도록 할 경우
+})
+
+fetch('https://example.com', {
+  credentials: 'same-origin' // 동일한 origin을 가지고 있을때만 자격증명을 전송하려고 할 경우
+})
+```
+
+init options
+```
+method: 'GET' // GET, POST, PUT, DELETE....
+headers: {
+  'Content-Type': 'application/json'
+}
+mode: 'same-origin' // no-cors, cors, same-origin
+cache: 'default' // default, no-cache, reload, force-cache, only-if-cached
+credential: 'same-origin' // include, same-origin, omit
+```
+
+예제 - init options 사용
+```
+fetch(url, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'image/jpeg'
+  },
+  mode: 'cors',
+  cache: 'default'})
+  .then(res => {
+    if (res.ok) {
+      console.log(res)
+    } else {
+      console.log('통신 실패')
+    }
+  })
+  .catch(err => {
+    throw Error('에러')
+  })
+```
+
+</div>
+</details>
