@@ -626,3 +626,203 @@ fetch(url, {
 
 </div>
 </details>
+
+
+---
+
+<details>
+<summary>
+
+## 1주차 - 금요일 학습
+
+</summary>
+<div>
+
+### [ 데이터 바인딩이란 ]
+
+```
+- React에서는 data를 state에 저장하여 사용한다
+- 중괄호({})를 사용하여 HTML 코드에 데이터를 바인딩할 수 있다
+- 문(statement)이 아닌 식(expression)을 사용해야 한다
+```
+
+### [ 콘텐츠 바인딩과 JavaScript 표현식 ]
+
+```
+- JSX 코드의 {}는 JavaScript 표현식을 연산한 '결과 값'을 바인딩한다.(식(Expression)은 항상 값을 반환하기 때문에)
+```
+
+### [ 속성 바인딩(style, className) ]
+
+```
+속성={데이터}
+
+// 스타일을 직접 바인딩
+<li style={{color: red; fontWeight: bold}}>...</li>
+
+// 스타일을 객체로 바인딩
+const listStyle = {
+  color: red,
+  fontWeight: bold
+}
+<li style={listStyle}>...</li>
+
+// 클래스 동적 바인딩
+const borderColor = 'red'
+<li className={`bordered bordered-${borderColor}`}>...</li> // li.bordered.bordered-red
+```
+
+### [ 조건 문을 사용한 조건부 렌더링 (if, switch문) ]
+
+if문
+```
+function conditionalRendering (isStrong = false) {
+  if (condition) {
+    return (
+      <strong>리액트 학습하기</strong>
+    )
+  } else {
+    return (
+      '리액트 학습하기'
+    )
+  }
+}
+
+const App = (
+  <p class="title">
+    {conditionalRendering(true)}
+  </p>
+)
+```
+switch문
+```
+function conditionalRendering (count) {
+  switch (count) {
+    case 1:
+      return (
+        <p>케이스 1에 해당됩니다</p>
+      )
+    case 2:
+      return (
+        <p>케이스 2에 해당됩니다</p>
+      )
+    case 3:
+      return (
+        <p>케이스 3에 해당됩니다</p>
+      )
+    default:
+      return (
+        <p>디폴트에 해당됩니다</p>
+      )
+  }
+}
+
+function randomCount(number) {
+  return number % 4 // 0,1,2,3
+}
+
+const App = (
+  <div>
+    {conditionalRendering(randomCount(Math.floor(100 * Math.random())))}
+  </div>
+)
+```
+
+### [ 조건 식을 사용한 조건부 렌더링 (3항식, 논리연산자) ]
+3항식
+```
+const isList = false
+
+const App = (
+  <div>
+    {
+      isList ? (
+        <ul>
+          <li>리스트 요소를 반환합니다</li>
+        </ul>
+      ) : (
+        <p>문단 요소를 반환합니다</p>
+      )
+    }
+  </div>
+)
+
+```
+
+논리연산자
+```
+const profile = {
+  name: 'chanho',
+  home: 'seoul'
+}
+
+function Introduce() {
+  return (
+    <p>{profile.name || '유저1'}</p>
+    <p>{profile.home || `한국`}</p>
+  )
+}
+```
+
+### [ Array 객체의 map() 메서드를 활용한 리스트 렌더링 ]
+
+```
+const users = [
+  {
+    name: '찬호',
+    home: '서울'
+  },
+  {
+    name: '호찬',
+    home: '대전'
+  },
+  {
+    name: '한초',
+    home: '대구'
+  },
+  {
+    name: '초한',
+    home: '부산'
+  },
+]
+
+function UserList () {
+  return (
+    <ul>
+      {
+        users.map((user, index) => (
+        <li key={index}>
+        이름 : {user.name}
+        사는 곳: {user.home}
+        </li>
+        ))
+      }
+    </ul>
+  )
+}
+```
+
+### [ JSX 사용시 주의할 점 ]
+
+```
+- 속성 이름은 camelCase를 사용
+- 단, 접근성 속성은 hypen-case를 사용
+- 콘텐츠가 없는 요소는 처럼 반드시 닫아(</>) 주어야 한다
+- 기본적으로 루트 요소는 하나만 사용
+- 불필요한 래핑 요소를 피하기 위해서는 아래와 같이 사용하면 된다
+  1) import React from 'react'
+     <React.Fragment></React.Fragment>
+
+  2) import React, { Fragment } from 'react'
+     <Fragment></Fragment>
+ 
+```
+
+[질문]
+JSX를 이용해 리스트 렌더링시 key속성에 고유한 값을 부여하는 것은 필수인데,
+여러 개의 배열을 각각 리스트 렌더링 했을 때 각 배열 리스트의 key값을 index로 주었을 경우 에러는 아니더라구요
+이 고유한 값은 해당 배열 내에서만 고유한 값이면 문제는 없는걸까요?
+고유한 값의 범위가 전체 프로젝트 내에서 인지 아니면 해당 페이지 혹은 배열 내에서 인지 궁금합니다~
+
+</div>
+</details>
