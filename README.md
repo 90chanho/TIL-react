@@ -826,3 +826,206 @@ JSX를 이용해 리스트 렌더링시 key속성에 고유한 값을 부여하�
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 2주차 - 월요일
+
+</summary>
+<div>
+
+### [ React 함수형 컴포넌트 ]
+```
+// 매개변수로 props를 전달받아 사용한다
+function 함수형 컴포넌트 (props) {
+  return (
+    <p>{props.title}</p>
+  )
+}
+```
+
+### [ React 클래스 컴포넌트 ]
+```
+class 클래스컴포넌트 extends React.component {
+  contructor(props) {
+    // props를 전달 받고 super(props)를 실행해 상위 컴포넌트에 전달해주어야 한다
+    super(props)
+  }
+
+  // render() 함수를 통해 JSX를 값을 리턴
+  render() {
+    return (
+      ...JSX
+    )
+  }
+}
+```
+
+### [ React 컴포넌트 import, export / props ]
+컴포넌트 모듈을 내보낼 때
+```
+// app.js
+function App () {
+  return (
+    ...JSX
+  )
+}
+
+export default App
+```
+
+컴포넌트 모듈을 불러올 때
+```
+// index.js
+import 'App' from './app.js'
+
+function Main() {
+  return (
+    <App />
+  )
+}
+```
+
+함수형 컴포넌트 props
+```
+function 함수형컴포넌트(props) {
+  return (
+    <p>{props}</p>
+  )
+}
+```
+
+클래스 컴포넌트 props
+```
+import React, {component} from 'react'
+
+class 클래스컴포넌트 extends component {
+  render() {
+    return (
+      // 여기서 this는 클래스를 통해 생성된 인스턴스를 말한다
+      <p>{this.props}</p>
+    )
+  }
+}
+```
+
+컴포넌트에서 props뿐만 아니라 컨텐츠도 같이 넘겨줄 경우 바인딩 하는 방법
+(레이아웃(틀)은 유지하고 일부 컨텐츠만 다르게 적용하고 싶을 때 편함)
+```
+// index.js
+
+import 'App' from './app.js'
+
+const title = '앱 타이틀'
+
+function Main() {
+  return (
+    <App title={title}>
+      <p>이 컨텐츠도 같이 넘겨줄게</p>
+    </App>
+  )
+}
+```
+props.children로 전달된 컨텐츠 접근 가능
+```
+// app.js
+import React, {component} from 'react'
+
+export default class 클래스컴포넌트 extends component {
+  render() {
+    return (
+      <React.Fragment>
+        <h1>{this.props.title}</h1>
+        {this.props.children}
+      </React.Fragment>
+    )
+  }
+}
+```
+[정리]
+- 컴포넌트에 전달된 속성(props) 객체는 읽기 전용이다. (수정해서는 안 된다)
+
+### [ React 컴포넌트 관리 (추출) ]
+```
+- 컴포넌트의 구조가 복잡한 경우 재사용성을 고려하여 잘게 나눠 컴포넌트화 하여 개발하는 것이 좋다
+- 초기에는 불필요하게 느껴질 수 있지만, 앱 규모가 커질수록 효율성은 높아짐
+```
+
+### [ JavaScript 타입 검사 ]
+```
+- JavaScript는 동적 타입을 사용하는 프로그래밍 언어이기 때문에, 데이터 타입이 잘못 전달된 경우 오류가 아니다.(타입 검사 필요)
+```
+
+### [ PropTypes를 활용해 컴포넌트 props 검사 ]
+- PropTypes 패키지는 앱 규모가 큰 경우에는 적합하지 않다.
+- 규모가 큰 경우 Flow, TypeScript 사용을 권한다
+
+```
+// 패키지 불러오기
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+
+// 
+class 컴포넌트명 extends Component {
+  const {속성1, 속성2, ... , 속성n} = this.props
+  render() {
+    return (
+      ...JSX
+    )
+  }
+}
+
+// 컴포넌트 속성으로 PropTypes 객체를 생성
+컴포넌트명.PropTypes = { 
+  // 속성1의 타입은 배열일 경우에만 통과
+  속성1: PropTypes.array,
+  // 속성2의 타입은 숫자이며 필수로 전달 받는 속성
+  속성2: PropTypes.number.isRequired,
+  ...
+  속성n: 값,
+}
+```
+
+### [ PropTypes 속성 기본 값 defaultProps 설정 ]
+props의 기본 값 설정
+- defaultProps 속성을 설정하면 됨
+```
+import React, { Component } from 'react'
+
+const Worker = ({ name, career, onCareerUp, isLeave }) => (
+  // ...
+)
+
+// props 기본 값 설정
+Worker.defaultProps = {
+  name: '찬호',
+  career: 0,
+  onCareerUp: () => console.log('커리어 업'),
+  isLeave: true
+}
+
+export default Worker
+```
+
+클래스 필드 활용
+- 클래스 컴포넌트는 클래스 필드 제안 문법을 사용할 수 있다
+- static 구문 사용
+```
+class Worker extends Component {
+  static PropTypes = {
+    name: PropTypes.string.isRequired,
+    career: PropTypes.number
+  }
+
+  static defaultProps = {
+    name: '찬호',
+    career: 0
+  }
+}
+```
+
+</div>
+</details>
