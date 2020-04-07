@@ -7,6 +7,7 @@
 - GitHub 저장소에 변경 사항 커밋 후 푸시
 
 ---
+
 <details>
 <summary>
 
@@ -139,8 +140,8 @@ class 클래스명 extends 참조할 클래스 {
 - class는 호이스트 되지 않는다.
 - 관례적으로 \_(언더스코어)로 시작으로하는 변수명은 비공개(Private) 데이터를 의미한다.
 - class를 참조할 때, 상위 클래스와 하위 클래스 모두 constructor가 있다면, 하위 클래스의 constructor에서 반드시 super()를 호출함으로써 상위클래스의 constructor를 실행시켜야 한다.
-</div>
-</details>
+  </div>
+  </details>
 
 ---
 
@@ -152,15 +153,18 @@ class 클래스명 extends 참조할 클래스 {
 </summary>
 <div>
 
-
 ### [ React 소개 ]
+
 학습 완료
 
 ### [ React 러닝 다이어그램 ]
+
 학습 완료
 
 ### [ React 컴포넌트와 요소 ]
+
 React Component(= 함수형 컴포넌트)
+
 ```
 function App () {
   return <div>React Element</div>
@@ -168,24 +172,30 @@ function App () {
 ```
 
 React Element(JSX 사용)
+
 ```
 var app = <App />
 ```
 
 ReactDOM - rendering
+
 ```
 // ReactDOM.render(가상DOM(React Element), 실제DOM)
 ReactDOM.render(app, document.querySelector('#app'))
 ```
 
 ### [ React 컴포넌트 구조 이해 및 활용 ]
+
 MenuListItem 컴포넌트 정의
+
 ```
 function MenuListItem () {
   return <li>List Item</li>
 }
 ```
+
 MenuList 컴포넌트 정의 및 MenuList 컴포넌트 안에서 MenuListItem 컴포넌트 사용
+
 ```
 function MenuList() {
   return <ul className="ediya-menu reset-list">
@@ -193,7 +203,9 @@ function MenuList() {
   </ul>
 }
 ```
+
 AppMain 컴포넌트 정의 및 AppMain 컴포넌트 안에서 MenuList 컴포넌트 사용
+
 ```
 function AppMain() {
   return <main className="app-main">
@@ -202,7 +214,9 @@ function AppMain() {
   </main>
 }
 ```
+
 App 컴포넌트 정의 및 App 컴포넌트 안에서 AppMain 컴포넌트를 사용
+
 ```
 function App() {
   return <AppMain />
@@ -210,15 +224,20 @@ function App() {
 ```
 
 [정리]
+
 1. 컴포넌트는 JSX 문법을 사용
 2. 함수형 컴포넌트 내에서 요소를 return 할 때 개행을 위해 괄호 사용 가능
 
 ### [ React 컴포넌트와 전달 속성(props) ]
+
 컴포넌트에 커스텀 속성을 전달
+
 ```
 <MenuListItem image="이미지경로" caption="캡션">
 ```
+
 함수의 매개변수로 속성을 바인딩
+
 ```
 function MenuListItem (props) {
   console.log(props) // {image: '이미지경로', caption: '캡션'}
@@ -234,27 +253,36 @@ function MenuListItem (props) {
 ```
 
 ### [ React 프로젝트 생성 with CRA ]
+
 학습 완료
 
 ### [ React 프로젝트 디렉토리 구조 - CRA ]
+
 1. public : 정적 리소스 디렉토리
+
 - manifest.json : 웹 앱을 사용자의 장치에 설치할 때 사용되는 메타 데이터를 제공
 - index.html : React앱의 기본 템플릿, public 폴더 URL은 %PUBLIC_URL%로 표현할 수 있다
 
 2. src : 애플리케이션 개발 디렉토리
+
 - index.js : React 앱의 엔트리(entry, 시작이 되는) 파일
 - App.js : React 컴포넌트 파일
+
 #
+
 [질문]
 
 1. 일반적으로 화살표 함수의 문법은 아래와 같이 식 또는 문으로 표현할 수 있는데
+
 ```
-const fn1 = () => { 
-  statement 
+const fn1 = () => {
+  statement
 }
 const fn2 = () => express
 ```
+
 아래 예제 코드를 보니까
+
 ```
 <ul>
   {
@@ -264,11 +292,13 @@ const fn2 = () => express
   }
 </ul>
 ```
+
 const fn1 = () => () 이런식으로 작성이 되어있는데,
 이는 요소가 길어질 경우 개행을 하기 위한 목적인 것은 알겠는데
 그럼 이 경우에는 '문(statement)'이 아닌 '식(express)' 인가요?
 
 2. JSX에서는 컨텐츠가 없으면 빈 요소가 아닌 경우에도 빈 요소처럼 표현할 수 있는건가요?
+
 ```
 <div>
   // <i className="icon icon-close"></i>
@@ -290,6 +320,7 @@ const fn1 = () => () 이런식으로 작성이 되어있는데,
 <div>
 
 ### [ VS Code 개발 도구 확장 ]
+
 - Prettier
 - Formatting Toggle
 - React Snippets
@@ -302,8 +333,10 @@ const fn1 = () => () 이런식으로 작성이 되어있는데,
 - Image preview
 - Translator
 
-### [ 미숙한 ES6 학습  - Promise ]
+### [ 미숙한 ES6 학습 - Promise ]
+
 프로미스?
+
 ```
 - 프로미스 객체는 비동기 작업이 맞이할 미래의 성공 또는 실패와 그 결과 값을 나타낸다
 - 프로미스는 매개변수로 resolve와 reject을 받는다
@@ -311,11 +344,13 @@ const fn1 = () => () 이런식으로 작성이 되어있는데,
 ```
 
 프로미스 생성자, new 생성자로 생성한다
+
 ```
 const 변수명 = new Promise((resolve, reject)=>{});
 ```
 
 프로미스의 상태값
+
 ```
 fending(대기)   : 연산이 이행되거나 거부되지 않은 상태
 fulfilled(이행) : 연산이 성공적으로 실행된 상태
@@ -323,6 +358,7 @@ rejected(거부)  : 연산이 어떠한 이유로 실패한 상태
 ```
 
 프로미스 메서드
+
 ```
 Promise.all(iterable)
 : 다수의 프로미스를 병렬처리 할 수 있다
@@ -340,6 +376,7 @@ Promise.reject()
 ```
 
 프로미스 프로토타입 메서드(인스턴스 메서드)
+
 ```
 Promise.prototype.then()
 : 프로미스가 성공적으로 이행됐을 경우 resolve의 값을 받아 실행할 수 있다
@@ -352,6 +389,7 @@ Promise.prototype.finally()
 ```
 
 프로미스 체인(Promise Chain) : 이행된 결과에 대해 연속적인 프로미스 실행
+
 ```
 const promise = new Promise((resolve, reject)=> {
   resolve(1) // 이행(fulfilled) 상태라 가정하여 resolve 함수를 호출하고 숫자 1을 넘겨줌
@@ -369,6 +407,7 @@ promise.then(res => {
 ```
 
 프로미스 체인 작업 중 에러가 발생할 경우 처리는 catch() 한 번 작성하면 된다
+
 ```
 promise.then(res => {
   console.log(res) // 1, 프로미스 객체의 resolve 함수에서 전달된 값
@@ -389,6 +428,7 @@ promise.then(res => {
 ```
 
 예제 - Promise.all() - 모두 성공
+
 ```
 const promise = new Promise((resolve, reject)=> {
   resolve(1)
@@ -405,7 +445,9 @@ promiseAll.then(res => {
   console.log(res) // [1,2,3]
 })
 ```
+
 예제 - Promise.all() - 중간 실패
+
 ```
 const promise = new Promise((resolve, reject)=> {
   resolve(1)
@@ -428,6 +470,7 @@ promiseAll.then(res => {
 ```
 
 예제 - Promise.race() - 모두 성공 일 경우
+
 ```
 const promise = new Promise((resolve, reject)=> {
   setTimeout(()=>{
@@ -456,6 +499,7 @@ promiseRace.then(res => {
 ```
 
 예제 - Promise.race() - 실패 케이스가 있는 경우
+
 ```
 const promise = new Promise((resolve, reject)=> {
   setTimeout(()=>{
@@ -504,6 +548,7 @@ promiseRace.then(res => {
 ## [ Virtual DOM ]
 
 가상 DOM 구성과 원리
+
 ```
 구성
 - h.js (virtual-hyperscript) : 가상 DOM tree 생성
@@ -513,14 +558,16 @@ promiseRace.then(res => {
 ```
 
 가상 DOM을 사용하는 이유
+
 ```
 UI는 사용자의 요구에 따라 변해야 하는데, UI가 변경되기 위해 실제 DOM이 다시 렌더링 되는 과정은 컨텐츠가 많을수록 속도가 느려진다.
-가상 DOM을 사용할 경우 '상태'를 이전과 비교하여 변경사항이 있으면 해당 부분의 실제 DOM만 업데이트(patch)하므로 보다 속도가 빠르다. 
+가상 DOM을 사용할 경우 '상태'를 이전과 비교하여 변경사항이 있으면 해당 부분의 실제 DOM만 업데이트(patch)하므로 보다 속도가 빠르다.
 ```
 
 ## [ JSX -> React 요소 ]
 
 JSX란?
+
 ```
 - JavaScript Syntax eXtension의 약자. 자바스크립트 언어의 확장
 - 구문이 HTML과 유사하다.(HTMl의 문법을 따르는 것은 아님)
@@ -528,6 +575,7 @@ JSX란?
 
 JSX -> React 요소
 JSX는 HTML과 유사한 문법을 사용해 React Element(실제 요소는 아니고 자바스크립트 객체)를 만들 수 있도록 한다.
+
 ```
 const reactEl = (
   <h1 className="title">리액트 엘리먼트</h1>
@@ -536,6 +584,7 @@ const reactEl = (
 
 바벨은 JSX 코드를 컴파일하여 React Element 객체를 생성한다.
 React는 이 객체를 읽어 들여 가상 DOM을 구성하고, 필요에 따라 실제 DOM에 장착(mount)하여 렌더링 될 수 있도록 한다
+
 ```
 var headElement = React.createElement(
   'h1',
@@ -545,6 +594,7 @@ var headElement = React.createElement(
 ```
 
 [ 정리 ]
+
 - JSX는 필수는 아니지만 권고 사항 (편리성, 가독성)
 - 리액트 엘리먼트는 '자바스크립트 객체'이다. DOM 요소가 아니다
 - 리액트는 리액트 엘리먼트를 읽어 '가상 DOM'을 구성한다
@@ -552,21 +602,24 @@ var headElement = React.createElement(
 ## [미숙한 ES6 문법 학습 - fetch]
 
 fetch란?
+
 ```
 - Fetch API를 이용하면 Request나 Response와 같은 HTTP의 파이프라인을 구성하는 요소를 조작하는것이 가능하다.
 - fetch() 메서드를 이용하는 것으로 비동기 네트워크 통신을 알기쉽게 기술할 수 있다.
 ```
 
 fetch 기본 스펙
+
 ```
 - fetch()로 부터 반환되는 Promise 객체는 HTTP error 상태(HTTP Statue Code : 404 | 500)를 reject하지 않는다.
   대신 ok 상태가 'false'인 'resolve'가 반환되며, 네트워크 장애나 요청이 완료되지 못한 상태에는 reject가 반환된다.
 
-- 보통 fetch는 쿠키를 보내거나 받지 않는다. 
+- 보통 fetch는 쿠키를 보내거나 받지 않는다.
 - 쿠키를 전송하기 위해서는 자격증명(credentials) 옵션을 반드시 설정해야 한다.(기본 자격증명(credentials) 정책은 same-origin.)
 ```
 
 fetch 문법
+
 ```
 fetch(url, { init })
   .then(res => {
@@ -582,6 +635,7 @@ fetch(url, { init })
 ```
 
 예제 - 자격 증명(credentials)이 포함된 Request 요청
+
 ```
 fetch('https://example.com', {
   credentials: 'include' // 자격 증명이 포함된 인증서를 보내도록 할 경우
@@ -593,6 +647,7 @@ fetch('https://example.com', {
 ```
 
 init options
+
 ```
 method: 'GET' // GET, POST, PUT, DELETE....
 headers: {
@@ -604,6 +659,7 @@ credential: 'same-origin' // include, same-origin, omit
 ```
 
 예제 - init options 사용
+
 ```
 fetch(url, {
   method: 'GET',
@@ -626,7 +682,6 @@ fetch(url, {
 
 </div>
 </details>
-
 
 ---
 
@@ -675,6 +730,7 @@ const borderColor = 'red'
 ### [ 조건 문을 사용한 조건부 렌더링 (if, switch문) ]
 
 if문
+
 ```
 function conditionalRendering (isStrong = false) {
   if (condition) {
@@ -694,7 +750,9 @@ const App = (
   </p>
 )
 ```
+
 switch문
+
 ```
 function conditionalRendering (count) {
   switch (count) {
@@ -729,7 +787,9 @@ const App = (
 ```
 
 ### [ 조건 식을 사용한 조건부 렌더링 (3항식, 논리연산자) ]
+
 3항식
+
 ```
 const isList = false
 
@@ -750,6 +810,7 @@ const App = (
 ```
 
 논리연산자
+
 ```
 const profile = {
   name: 'chanho',
@@ -815,7 +876,7 @@ function UserList () {
 
   2) import React, { Fragment } from 'react'
      <Fragment></Fragment>
- 
+
 ```
 
 [질문]
@@ -838,6 +899,7 @@ JSX를 이용해 리스트 렌더링시 key속성에 고유한 값을 부여하�
 <div>
 
 ### [ React 함수형 컴포넌트 ]
+
 ```
 // 매개변수로 props를 전달받아 사용한다
 function 함수형 컴포넌트 (props) {
@@ -848,10 +910,10 @@ function 함수형 컴포넌트 (props) {
 ```
 
 ### [ React 클래스 컴포넌트 ]
+
 ```
 class 클래스컴포넌트 extends React.component {
-  contructor(props) {
-    // props를 전달 받고 super(props)를 실행해 상위 컴포넌트에 전달해주어야 한다
+  constructor(props) {
     super(props)
   }
 
@@ -865,7 +927,9 @@ class 클래스컴포넌트 extends React.component {
 ```
 
 ### [ React 컴포넌트 import, export / props ]
+
 컴포넌트 모듈을 내보낼 때
+
 ```
 // app.js
 function App () {
@@ -878,6 +942,7 @@ export default App
 ```
 
 컴포넌트 모듈을 불러올 때
+
 ```
 // index.js
 import 'App' from './app.js'
@@ -890,6 +955,7 @@ function Main() {
 ```
 
 함수형 컴포넌트 props
+
 ```
 function 함수형컴포넌트(props) {
   return (
@@ -899,6 +965,7 @@ function 함수형컴포넌트(props) {
 ```
 
 클래스 컴포넌트 props
+
 ```
 import React, {component} from 'react'
 
@@ -914,6 +981,7 @@ class 클래스컴포넌트 extends component {
 
 컴포넌트에서 props뿐만 아니라 컨텐츠도 같이 넘겨줄 경우 바인딩 하는 방법
 (레이아웃(틀)은 유지하고 일부 컨텐츠만 다르게 적용하고 싶을 때 편함)
+
 ```
 // index.js
 
@@ -929,7 +997,9 @@ function Main() {
   )
 }
 ```
+
 props.children로 전달된 컨텐츠 접근 가능
+
 ```
 // app.js
 import React, {component} from 'react'
@@ -945,21 +1015,26 @@ export default class 클래스컴포넌트 extends component {
   }
 }
 ```
+
 [정리]
+
 - 컴포넌트에 전달된 속성(props) 객체는 읽기 전용이다. (수정해서는 안 된다)
 
 ### [ React 컴포넌트 관리 (추출) ]
+
 ```
 - 컴포넌트의 구조가 복잡한 경우 재사용성을 고려하여 잘게 나눠 컴포넌트화 하여 개발하는 것이 좋다
 - 초기에는 불필요하게 느껴질 수 있지만, 앱 규모가 커질수록 효율성은 높아짐
 ```
 
 ### [ JavaScript 타입 검사 ]
+
 ```
 - JavaScript는 동적 타입을 사용하는 프로그래밍 언어이기 때문에, 데이터 타입이 잘못 전달된 경우 오류가 아니다.(타입 검사 필요)
 ```
 
 ### [ PropTypes를 활용해 컴포넌트 props 검사 ]
+
 - PropTypes 패키지는 앱 규모가 큰 경우에는 적합하지 않다.
 - 규모가 큰 경우 Flow, TypeScript 사용을 권한다
 
@@ -968,7 +1043,7 @@ export default class 클래스컴포넌트 extends component {
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-// 
+//
 class 컴포넌트명 extends Component {
   const {속성1, 속성2, ... , 속성n} = this.props
   render() {
@@ -979,7 +1054,7 @@ class 컴포넌트명 extends Component {
 }
 
 // 컴포넌트 속성으로 PropTypes 객체를 생성
-컴포넌트명.PropTypes = { 
+컴포넌트명.PropTypes = {
   // 속성1의 타입은 배열일 경우에만 통과
   속성1: PropTypes.array,
   // 속성2의 타입은 숫자이며 필수로 전달 받는 속성
@@ -990,8 +1065,11 @@ class 컴포넌트명 extends Component {
 ```
 
 ### [ PropTypes 속성 기본 값 defaultProps 설정 ]
+
 props의 기본 값 설정
+
 - defaultProps 속성을 설정하면 됨
+
 ```
 import React, { Component } from 'react'
 
@@ -1011,8 +1089,10 @@ export default Worker
 ```
 
 클래스 필드 활용
+
 - 클래스 컴포넌트는 클래스 필드 제안 문법을 사용할 수 있다
 - static 구문 사용
+
 ```
 class Worker extends Component {
   static PropTypes = {
@@ -1025,6 +1105,196 @@ class Worker extends Component {
     career: 0
   }
 }
+```
+
+</div>
+</details>
+
+---
+
+<details>
+<summary>
+
+## 2주차 - 화요일
+
+</summary>
+<div>
+
+### [ 클래스 컴포넌트의 state란? ]
+
+클래스 컴포넌트는 함수형 컴포넌트와 달리 다음과 같은 차이점이 있다
+
+1. 자신만의 상태(state)와 라이프 사이클 훅(life cycle hook)을 가진다.
+2. this 키워드 사용할 수 있다
+
+클래스 컴포넌트에서 state값 설정하기
+
+```
+class App extends Component {
+  constructor () {
+    super()
+    this.state = {
+      data1: [],
+      ...
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <p>{this.stats.data1}</p>
+      </div>
+    )
+  }
+}
+```
+
+클래스 필드(class field) 문법
+
+```
+class App extends Component {
+  state = {
+    data1: [],
+    ...
+  }
+
+  render() {
+    ...
+  }
+}
+```
+
+state값 변경하기
+
+```
+this.setState({
+  key: value,
+  ...
+}, callback())
+```
+
+### [ 컴포넌트 라이프 사이클 훅(Life Cycle Hooks)이란? ]
+
+라이프 사이클 3단계
+
+```
+1. 탄생(생성) - 마운팅(Mounting)
+2. 성장(갱신) - 업데이팅(Updating)
+3. 죽음(제거) - 언 마운팅(Unmounting)
+```
+
+알반적인 라이프 사이클 단계별 내용
+
+```
+1. 마운팅
+constructor -> render -> componentDidMount
+
+2. 업데이팅
+constructor -> render -> componentDidUpdate
+
+3. 언 마운팅
+                         componentWillUnmount
+```
+
+### [ 생성 시점의 라이프 사이클 훅 ]
+
+마운팅
+
+```
+constructor()
+- 컴포넌트 생성 시점에 호출
+
+static getDerivedStateFromProps(props, state) {
+  return
+}
+- 전달된 상태 및 속성을 가져와 설정하는 시점에 호출
+- 컴포넌트 상태(state)를 업데이트 할 수 있다
+
+render()
+- 컴포넌트 렌더링 시점에 호출
+
+componentDidMount()
+- DOM에 마운트 된 이후 시점에 호출
+- 리액트 엘리먼트가 실제 DOM에 마운트 되었기 때문에, 실제 DOM에 접근 가능
+- DOM을 수정하면 부작용이 있을 수 있음(state나 props에 변화와 관련 없이 DOM을 변경하기 때문에?)
+```
+
+상위 컴포넌트와 하위 컴포넌트의 생성 시점
+
+```
+- 상위 컴포넌트의 'render() 이후' ~ 'componentDidMount() 이전' 사이에 하위 컴포넌트의 생성이 시작되면서 하위 컴포넌트의 constructor()가 실행 된다.
+- 하위 컴포넌트의 componentDidMount()까지 실행 완료 되면, 그 이후에 상위 컴포넌트의 componentDidMout()가 실행된다.
+```
+
+### [ 업데이트, 제거 시점의 라이프 사이클 훅 ]
+
+업데이팅
+
+```
+static getDerivedStateFromProps()
+- 위의 내용과 동일
+
+shouldComponentUpdate(nextProps, nextState) { return boolean }
+- 성능 최적화 용도로 사용 됨
+- return값 true일 경우 렌더링, false일 경우 렌더링 취소
+
+render() {}
+- 위의 내용과 동일
+
+getSnapshotBeforeUpdate(prevProps, prevState) { reutn ... }
+- 컴포넌트 업데이트 전 스냅샷 가져오는 시점에 호출
+
+componentDidUpdate () {}
+- 컴포넌트 업데이트 이후 시점에 호출
+```
+
+언마운팅
+
+```
+componentWillUnmount() {}
+- 컴포넌트 제거 예정 시점에 호출
+```
+
+### [ 오류 발생 시점의 라이프 사이클 훅 ]
+
+오류가 발생하는 경우에만 호출되는 라이프 사이클 훅
+
+```
+static getDerivedStateFromError () { }
+- '자손' 컴포넌트 오류 발생 시 호출
+- 에러 발생시 state값을 변경하여 다른 JSX를 리턴하도록 조작할 수 있다
+```
+
+```
+const ErrorComponent = () => { return JSX }
+const noErrorComponent = () => { return JSX }
+
+class LifeCycleHook extends Component {
+  state = {
+    hasError: false // 에러 상태를 나타내는 state, 기본값은 false로 설정
+  }
+
+  static getDerivedStateFromError(error) {
+    // 에러 발생시 실행되므로 state값을 변경하여 리턴시킨다
+    return { hasError = true }
+  }
+
+  render() {
+    // state.hasError가 true이면 ErrorComponent를 렌더링하도록 분기처리
+    if (this.state.hasError) {
+      return <ErrorComponent />
+    }
+    return (
+      return <noErrorComponent />
+    )
+  }
+}
+```
+
+```
+componentDidCatch (error, info) { }
+- '자손' 컴포넌트 오류 발생 시 호출
+- info 매개변수는 어떤 컴포넌트가 오류를 발생시켰는지에 대한 정보를 가진 componentStack 속성을 가진 객체이다
 ```
 
 </div>
