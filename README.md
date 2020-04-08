@@ -1299,3 +1299,142 @@ componentDidCatch (error, info) { }
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 2주차 - 수요일
+
+</summary>
+<div>
+
+## [ React 이벤트 핸들링 ]
+
+- 이벤트 속성 이름은 camelCase 문법을 사용
+
+[ 추가 ]
+
+- event.target : 이벤트의 발생 요소 (이벤트 버블링 요소에서 최말단에 해당되는 요소)
+- event.currentTarget : 이벤트 생성 위치
+
+## [ React 이벤트 핸들러와 this ]
+
+클래스 컴포넌트 this 참조 방법1 -
+.bind(this) 사용
+
+```
+class App extends Component {
+  constructor () {
+    super()
+    this.method1 = this.method1.bind(this)
+  }
+
+  method1 (e) {
+    console.log(this) // this === PreventBrowserDefaultAction {}
+  }
+
+  render() {
+    return (
+      <a href="https://google.com/" onClick={this.method1}>Google</a>
+    )
+  }
+}
+
+또는
+
+class App extends Component {
+  method1 (e) {
+    console.log(this)
+  }
+
+  render() {
+    return (
+      <a href="https://google.com/" onClick={this.method1.bind(this)}>Google</a>
+    )
+  }
+}
+
+```
+
+클래스 컴포넌트 this 참조 방법2 -
+화살표 함수 표현식 사용
+
+```
+class App extends Component {
+  method1 (e) {
+
+  }
+
+  render() {
+    return (
+      <a href="https://google.com/" onClick={(e) => this.method1(e)}>Google</a>
+    )
+  }
+}
+```
+
+클래스 컴포넌트 this 참조 방법3 (강사님 선호) -
+클래스 필드 문법 사용
+
+```
+class App extends Component {
+  method1 = (e) => {
+
+  }
+
+  render() {
+    return (
+      <a href="https://google.com" onClick={this.method1}></a>
+    )
+  }
+}
+```
+
+이벤트 핸들러와 인자 전달 방법1 (강사님 선호) -
+이벤트 객체를 전달
+
+```
+<BaseButton
+  onClick={ (e) => this.handleClick(id, e) }
+>
+  ...
+</BaseButton>
+```
+
+이벤트 핸들러와 인자 전달 방법2 -
+.bind(this, arguments)
+
+```
+<BaseButton
+  onClick={ this.handleClick.bind(this, param) }
+>
+  ...
+</BaseButton>
+```
+
+컴포넌트 통신
+
+## [ React 컴포넌트 간 통신이 필요한 이유 ]
+
+학습 완료
+
+## [ 부모 컴포넌트와 자식 컴포넌트 사이의 props ⇌ callback ]
+
+- 부모 컴포넌트는 자식 컴포넌트에게 props로 메서드를 전달
+- 자식 컴포넌트는 전달받은 메서드를 실행하여 부모 컴포넌트에게 callback
+
+## [ 복잡한 컴포넌트 트리 구조에서 props ⇌ callback의 문제 ]
+
+- 컴포넌트 중첩이 복잡한 경우 해당 props와 callback을 사용하지 않더라도 각 컴포넌트마다 설정 해줘야 하기 때문에 복잡해진다.
+
+## [ 상태 관리를 효율적으로 관리하기 위한 방법 Context, React Redux ]
+
+복잡한 컴포넌트에서 props와 callback해결책
+
+- Context : 컴포넌트를 재사용할 수 없기 때문에 필요한 경우가 아니면 다른 방법을 사용해야 한다
+- State 관리 라이브러리 'Redux' : 공통 저장소를 두고 각 컴포넌트에서 가져다 쓰는 방법
+
+</div>
+</details>
