@@ -1438,3 +1438,146 @@ class App extends Component {
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 2주차 - 목요일
+
+</summary>
+<div>
+
+### [Context의 Provider, Consumer를 사용한 데이터 공유]
+
+- props 전달의 문제점  
+  : 컴포넌트의 중첩이 많을 수록 하위 컴포넌트로 prop를 전달하고 상위 컴포는트로 콜백하는 것이 복잡해 짐  
+  : Context를 사용하면 전달하고자 하는 props를 가지고 있는 공급자(Provider)역할 컴포넌트와,  
+   해당 props를 사용하고자 하는 수요자(Consumer)역할 컴포넌트에서만 작업하면 된다.
+
+```
+import React, { Component, createContext } from 'react'
+
+// createContext 객체를 활용하여 context를 생성, ()는 기본값 설정
+const AuthContext = createContext(false)
+
+class App extends createContext {
+  state = {
+    authentification: true
+  }
+
+  render() {
+    return (
+      // 공급자 역할, 전달하고자 하는 props는 value 속성을 사용
+      <AuthContext.Provider value={this.state.authentification}>
+        <MenuBar />
+      </AuthContext>
+    )
+  }
+}
+
+// 수요자가 아닌 컴포넌트는 전달 과정 불 필요.
+const MenuBar = () => (
+  <SignIn />
+)
+
+const SignIn = () => {
+  <AuthContext.Consumer>
+    {
+      // 매개변수로 context를 전달 받음
+      (context) => {
+        ...
+      }
+    }
+  </AuthContext.Consumer>
+}
+```
+
+### [Context 모듈을 활용해 개별 컴포넌트에서 데이터 공유]
+
+- Context 또한 별도의 파일로 구분하면 유지보수에 좋음
+
+```
+// AuthContext.js
+
+import React, {createContext} from 'react'
+
+export const authContext = {
+  isAuth: false,
+  signIn = () => { ... }
+}
+
+export default createContext(authContext)
+```
+
+공급자
+
+```
+// App.js
+import React, {Component} from 'react'
+import AuthContext from './context/AuthContext'
+
+class App extends Component {
+  state = {
+    authentification: true
+  }
+  logIn = () => {
+    ...
+  }
+  render() {
+    return (
+      <AuthContext.Provider value={{ isAuth: this.state.authentification, signIn: this.logIn }}>
+        <MenuBar />
+      </AuthContext.Provider>
+    )
+  }
+}
+```
+
+수요자
+
+```
+// SignIn.js
+import AuthContext from '../context/AuthContext'
+
+const SignIn = () => (
+  <AuthContext.Consumer>
+    {
+      ({isAuth, signIn}) => isAuth ?
+        <div className="signed">로그인 됨</div> :
+        <button type="button" onClick={() => signIn}>로그인</button>
+    }
+  </AuthContext.Consumer>
+)
+```
+
+### [Context Type 활용]
+
+클래스 컴포넌트와 Context
+
+```
+- 'context 객체'를 '클래스 컴포넌트의 스태틱(static) 속성'으로 지정해 활용하는 방법
+- <Context.Consumer> 대신 this.context로 접근이 가능하다
+```
+
+```
+import AuthContext from '../context/AuthContext'
+
+class Signin extends Component {
+  static contextType = AuthContext
+
+  render() {
+    const {isAuth, signIn} = this.context
+    return (
+      isAuth ?
+        <div className="signed">로그인 됨</div>
+        <button type="button" onClick={() => signIn}>로그인</button>
+    )
+  }
+
+}
+```
+
+</div>
+</details>
