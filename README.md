@@ -1581,3 +1581,102 @@ class Signin extends Component {
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 2주차 - 금요일
+
+</summary>
+<div>
+
+## [ 헤딩 레벨(Heading Level) ]
+
+- 크롬 익스텐션 : tota11y
+
+```
+- 웹 페이지 접근성에 대한 정보 제공
+- 접근성이 지켜지지 않는 부분에 대해서 경고 메세지 제공
+```
+
+- 라이브러리 : tenon-io/tenon-ui
+
+```
+import { Heading } from '@tenon-io/tenon-ui'
+
+// 레벨1
+<Heading.H>최상단 레벨</Heading.H>
+
+<Heading.LevelBoundary>
+  // 레벨2
+  <Heading.H>상단 레벨</Heading.H>
+  <Heading.LevelBoundary>
+    // 레벨3
+   <Heading.H>하위 레벨</Heading.H>
+  </Heading.LevelBoundary>
+</Heading.LevelBoundary>
+</Heading.H>
+```
+
+## [ 히든 콘텐츠(Hidden Contents) ]
+
+- a11yHidden style example : 화면상으로 보이지는 않지만, 스크린리더로 접근 가능하도록
+
+```
+overflow: hidden;
+position: absolute;
+clip: rect(0, 0, 0, 0);
+width: 1px; // for Screen Reader
+height: 1px;
+margin: -1px;
+border: 0;
+padding: 0;
+```
+
+- React를 사용한다면 class 속성으로 style을 적용해도 되지만, 컴포넌트화 하는 것도 방법이다.
+
+## [ 버튼 컴포넌트(Button Component) ]
+
+```
+- 버튼의 기능을 하는 요소는 <div>, <img> 요소와 같은 포커스로 접근이 안 되는 컨텐츠를 사용해서는 안 된다.(스크린리더에서 접근 불가)
+
+- 스크린리더에서 버튼에 접근했을 때, 버튼의 역할, 컨텐츠 정보 등을 제공해야 한다
+```
+
+## [ 사용에 주의가 필요한 HTML 표준 문법 ]
+
+```
+- <li>요소는 오직 <ol>,<ul>요소의 자식요소로써 사용할 수 있다
+
+- <caption>요소를 <table>요소의 첫번째 자식요소로 배치해야 한다.
+
+- <figcaption>요소는 오직 <figure>요소의 자식요소로써 사용할 수 있다.
+```
+
+## [ 접근성 자동 검사 (React-axe) ]
+
+- 라이브러리 : react-axe
+
+```
+$ npm i -D react-axe
+```
+
+예제
+
+```
+import React from 'react'
+import ReactDOM from 'react-dom'
+import axe from 'react-axe'
+
+// 개발환경에서 확인 후 수정해야 하므로 배포환경이 아닌 경우 동작하도록 설정
+if (process.env.NODE_ENV !== 'production') {
+  axe(React, ReactDOM, 1000)
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+</div>
+</details>
