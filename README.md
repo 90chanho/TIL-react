@@ -1680,3 +1680,199 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 3주차 - 월요일
+
+</summary>
+<div>
+
+### [ 시작하기 ]
+
+- cra-template-ko-craco 커스텀 템플릿을 사용하여 프로젝트 시작하기
+
+### [ 문서 헤드 구성 ]
+
+- .env (환경 변수 파일)
+
+```
+- 환경 변수란? 특정 프로세스를 위한 '키=값' 형태의 변수를 말한다.
+```
+
+- og (open graph)
+
+```
+- 오픈 그래프 프로토콜? 페이스북에서 처음 만들어졌으며, 웹사이트의 메타 데이터를 표기하는 방법 중 하나
+- 공유 된 링크 사이트의 '미리보기' 정보를 제공한다.(제목, 설명, 이미지 등등...)
+- 트위터는 자체적인 메타데이터 표기법을 사용하고 있음
+- 코드상 메타 데이터 값을 수정했다하더라도, 애플리케이션에서 캐싱된 데이터를 참조할 수 있기때문에 변경이 되지 않은 것처럼 보일 수 있다(이는 캐시가 소멸되거나, 캐싱을 리로드 시켜야 한다)
+
+<meta property="og:lang" content="ko-KR" />
+<meta property="og:title" content="이디야(Ediya) UI ← React 실습" />
+<meta property="twitter:title" content="이디야(Ediya) UI ← React 실습" />
+<meta
+  property="og:description"
+  content="이듬 블렌디드 러닝 '이디야(Ediya) UI ← React 실습' 시연으로 제작한 결과물입니다."
+/>
+<meta property="og:image" content="%PUBLIC_URL%/assets/og-image.jpg" />
+```
+
+### [ 컴포넌트 디렉토리 구성 ]
+
+- components, api 디렉토리 구성
+
+### [ 컴포넌트 구성 Part 1 ]
+
+- 동적으로 모듈 import()
+
+```
+- 필요에 따라 모듈을 import 할 수 있다
+- 함수형 구문인 import()는 promise()를 반환한다.
+- 계산된 모듈 이름을 사용할 수 있다
+
+const modulePage = 'page.js';
+import(modulePage)
+  .then((module) => {
+    module.default();
+  });
+```
+
+예제
+
+```
+// 작업 환경이 '배포'환경 일 때, 모듈을 불러와서 사용하도록 설정
+// '배포'환경이 아닌 경우에는 해당 모듈을 import 하지 않는다
+if (process.env.NODE_ENV === 'production') {
+  import('~/config/serviceWorker')
+    .then(serviceWorker => serviceWorker.register)
+    .catch(error => console.error(error.message))
+}
+```
+
+- import 파일 경로 설정
+
+```
+import { AppHeader } from "~/components/AppHeader/AppHeader"
+
+위와 같이 파일 경로에 '~'와 같은 임의의 경로를 사용하고 싶을 경우
+jsconfig.json에서 해당 경로를 설정해 주면 된다.
+```
+
+예제
+
+```
+// jsconfig.json
+{
+  compilerOptions: {
+    "baseUrl": "src",
+    "paths": {
+      "~/*": [
+        "./*"
+      ],
+      ...
+    }
+  }
+}
+```
+
+### [ 컴포넌트 구성 Part 2 ]
+
+- AppHomeLink, AppNavigation, BeverageList, BeverageItem 컴포넌트
+- 컴포넌트 스타일 관리
+
+### [ 컴포넌트 props 디자인 ]
+
+- '나머지 매개변수'와 '구조 분해 할당'을 사용한 props 바인딩
+- 동적으로 컴포넌트 태그 설정하기
+
+```
+import { SubComponent } from './SubComponent.js'
+
+<SubComponent
+  // 상위 컴포넌트에서 props 전달하기
+  wrapperProps={
+    {
+      as: 'h2',
+      title: '래퍼'
+      className: 'wrapper'
+    }
+  }
+  href="/"
+  className="content"
+  title="컨텐츠"
+  external>
+  <p>이것도 같이 전달해줄게</p>
+</SubComponent>
+```
+
+```
+// SubComponent.js
+
+const SubComponent = ({
+  // 구조 분해 할당과 나머지 매개변수 활용
+  // wrapperProps.as의 경우 별칭을 사용하였으며, TitleCase를 사용한 이유는 기존의 태그와 구분을 해야 하므로
+  wrapperProps: {as: WrapperComponent, wrapperClassName, href, title, ...restWrapperProps},
+  className,
+  ...restContentProps
+}) => {
+  // 컴포넌트의 tag를 동적으로 설정(wrapperProps.as로 설정한 값으로 태그를 설정할 수 있다)
+  <WrapperComponent
+    ...restWrapperProps
+    className={wrapperClassName}
+  >
+    <a
+      {...restContentProps}
+      className={className}
+      href={href}
+      title={title}
+      target={external ? "_blank" : null}
+      rel={external ? "noopenner noreferrer" : null}>
+      <span className="a11yHidden" lang="en">
+        EDIYA COFFEE
+      </span>
+    </a>
+  </WrapperComponent>
+}
+```
+
+- 전달 받은 props에 대한 기본값 설정하기
+
+```
+방법 1 - 바인딩 할 때, 조건처리
+
+<a
+  {...restContentProps}
+  className={className || ''}
+  href={href || '/'}
+  title={title || '링크'}
+  target={external ? "_blank" : null}
+  rel={external ? "noopenner noreferrer" : null}>
+  <span className="a11yHidden" lang="en">
+    EDIYA COFFEE
+  </span>
+</a>
+```
+
+```
+방법 2 - defaultProps 사용하기
+
+SubComponent.defaultProps = {
+  wrapperProps: {
+    as: 'h1',
+    title: 'wrapper'
+  },
+  title: 'content',
+  href: '/'
+}
+```
+
+[ 질문 ]
+
+- 오프라인 수업에서 나머지 매개변수로 설정한 속성들을, 속성 중 가장 먼저 선언해야 한다고 하셨는데 무슨 이유였죠?
+
+</div>
+</details>
