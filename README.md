@@ -1876,3 +1876,123 @@ SubComponent.defaultProps = {
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 3주차 - 화요일
+
+</summary>
+<div>
+
+### [ AppNavigation 컴포넌트 이벤트 핸들링, 타임 컨트롤 ]
+
+컨텐츠가 상태에 따라 show/hide 되는 경우 style 뿐만 아니라 hidden 속성도 같이 적용해줘야 한다.
+
+```
+-> hide style을 어떻게 적용했는지에 따라, 화면에 보이지 않을지라도 스크린리더에서 접근이 가능한 경우가 있다
+-> 이러한 문제점을 방지하기 위해 컨텐츠를 hide 할 경우 hidden 속성도 같이 toggle 해 주어야 한다
+```
+
+### [ Context API → AppNavigation 리스트 렌더링 ]
+
+- 컴포넌트의 props 설정 값은 해당 컴포넌트의 최상위 wrapper 컴포넌트의 속성으로 자동 적용됨.
+- 전달한 속성과 컴포넌트 내부에 작업된 속성이 중복될 경우 나중에 선언된 것이 적용된다.
+
+```
+import SubComponent from './component/SubComponent.js'
+
+<SubComponent id="전달한 아이디" title="전달한 타이틀" onClick="전달한 이벤트">
+  ...
+</SubComponent>
+```
+
+```
+// SubComponent.js
+
+export const SubComponent = () => {
+  <button id="내부 아이디" type="button">
+    버튼
+  </button>
+}
+```
+
+```
+// 렌더링 된 실제 SubComponent
+
+<button type="button" id="전달한 아이디" title="전달한 타이틀" onClick="전달한 이벤트">
+  버튼
+</button>
+```
+
+### [ 키보드 접근성 (ref, forwardRef, shouldComponentUpdate) 설정 ]
+
+- 컨텐츠 show/hide 여부에 따라 불필요한 이벤트가 있을 경우에는 해당 이벤트를 제거해줘야 한다 (이 때, 해당 이벤트는 별도의 함수로 작업해야 함)
+
+- ref는 사용을 자제해야 하며, 사용해야 하는 경우는 다음과 같다
+
+```
+1. 포커스, 텍스트 선택 영역, 미디어 재생 관리
+2. 3rd Party 라이브러리 활용
+3. 애니메이션 직접 처리
+
+ref를 사용하기 전에 state를 사용하여 작업할 수 있는지, 또는 props와 callback 함수를 사용하여 구현할 수 있는지 고민해볼것
+```
+
+### [ 컴포넌트 참조 전달(forwardRef)과 개발 도구에서 이름 표시 설정 ]
+
+- 학습 완료
+
+[ 질문 ]
+
+질문1) React.createContext(initValue)에서 초기값(initValue)으로 설정한 값은 사용할 수 없는건가요?
+
+```
+// 초기값 설정
+const initValue = "hello react"
+// 컨텍스트 생성
+const MyContext = React.createContext(initValue)
+```
+
+제가 예상한 초기값 설정시 컨텍스트 작업
+
+```
+// 초기값을 설정했으므로 value를 따로 건네주지 않음
+<MyContext.Provider>
+  <App />
+</MyContext.Provider>
+
+
+<MyContext.Consumer>
+  {
+    (value) => {
+      console.log(value) // undefined
+    }
+  }
+</MyContext.Consumer>
+```
+
+제대로 동작하는 경우
+
+```
+// 정상 동작 : value로 initValue 건네줌
+<MyContext.Provider value="initValue">
+  <App />
+</MyContext.Provider>
+
+<MyContext.Consumer>
+  {
+    (value) => {
+      console.log(value) // "hello react"
+    }
+  }
+</MyContext.Consumer>
+```
+
+질문2) 학습 내용 질문은 아니고 강사님에게 조언을 듣고 싶은데, 이번에 미니 프로젝트를 따라 해보면서 느낀게 확실히 컨텐츠를 구현해보는게
+부족한 부분이 어딘지 알고, 어려웠던 내용이 보다 이해가 잘 되고 기억에 잘 남는것 같습니다. 그래서 강의 예제 코드 이외에 어느정도 규모있는 토이프로젝트를 진행하면서 그 때 그 때 조금씩 배운 내용들을 적용해보고 싶은데, 지금보다 이론 학습 이후에 전체적인 내용을 학습하고 프로젝트를 만드는게 더 나을까요? 만약 프로젝트를 진행한다면 따라해보기에 추천해주실만한 사이트나 오픈 API가 있을까요~?? 나중에 답변주셔도 됩니다 :)
+
+</div>
+</details>
