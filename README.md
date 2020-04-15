@@ -1996,3 +1996,107 @@ const MyContext = React.createContext(initValue)
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 3주차 - 수요일
+
+</summary>
+<div>
+
+### [ React 훅(Hook) ]
+
+#### useState() 훅을 활용한 상태 관리
+
+```
+- 훅(Hook)을 사용하면 함수형 컴포넌트에서도 클래스 컴포넌트에서만 사용할 수 있었던 state 등의 여러 리액트 기능을 사용할 수 있다.
+
+- 훅(Hook)을 사용할 때는 반드시 다음 규칙에 따라야 한다
+  1. React 함수형 컴포넌트 안에서만 사용
+  2. 컴포넌트 안의 반복문 | 조건문 | 중첩된 함수 안에서 훅을 사용해서는 안 된다.
+```
+
+#### React 클래스 컴포넌트 → 함수형 컴포넌트로 전환 (상태 관리)
+
+학습 완료
+
+#### useEffect() 훅을 활용한 사이드 이펙트 처리
+
+- useEffect(fn [, target])
+
+```
+- 함수형 컴포넌트의 useEffect() 훅은 라이프 사이클 훅을 하나의 API로 통합한 것이다.
+- useEffect()는 전달 받은 함수를 'DOM 업데이트 이후 시점'에 실행
+- 설정된 함수는 '컴포넌트 내부'에 위치해 있어서 state, props에 접근 가능하다.
+- 컴포넌트 렌더링, 업데이트 이후 시점(componentDidMount, componentDidUpdae)에 빠짐없이 실행된다.
+```
+
+기본 예제
+
+```
+import React, {useEffect} from 'react'
+
+function CountDown (props) {
+  useEffect(()=>{
+    ...
+  })
+}
+```
+
+컴포넌트 제거 이전 시점에서 코드 실행이 필요한 경우
+
+```
+useEffect(() => {
+  ...
+  return () => {
+    컴포넌트 제거 되기 전(componentWillUnmount)에 실행됨.
+  }
+})
+```
+
+useEffect의 성능 이슈(모든 상태 변화에 반응하므로, 필요한 상태의 변화에만 실행되도록 설정하는 것이 좋다)
+
+```
+userEffect(() => {
+  ...
+}, [targetState])
+```
+
+#### useRef() 훅을 활용한 DOM 노드 접근/조작
+
+- useRef() 훅은 실제 DOM 노드를 참조(Ref.)할 경우에 사용된다.
+- 실제 DOM을 참조하는 것이기 때문에 컴포넌트 '라이프 사이클 훅'과는 관련이 없다.(컴포넌트가 다시 렌더링 되지 않는다)
+
+#### useContext() 훅을 활용한 데이터 공유
+
+```
+import React, {useContext} from 'react'
+import AuthContext from '../context/AuthContext'
+
+
+function SingIn (props) {
+  const authContext = useContext(AuthContext)
+  const { isAuth, signIn} = authContext
+  return (
+    {
+      isAuth ?
+        <div>...</div> :
+        <button onClick={()=>{signIn}}>...</button>
+    }
+  )
+}
+```
+
+### [ 리스트 렌더링 & 컨텍스트 Part 2 ]
+
+실습 완료
+
+### [ 페이지 상단 스크롤 이동 ]
+
+실습 완료
+
+</div>
+</details>
