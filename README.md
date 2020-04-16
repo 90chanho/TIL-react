@@ -2100,3 +2100,108 @@ function SingIn (props) {
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 3주차 - 목요일
+
+</summary>
+<div>
+
+### [ 고차 컴포넌트(HOC, Higher-Order Component) ]
+
+#### 고차 함수(HOF)란?
+
+- 학습 완료
+
+#### 고차 컴포넌트(HOC)란?
+
+- 컴포넌트를 전달받아 컴포넌트를 반환하는 컴포넌트
+
+```
+// props의 children을 반환하는 컴포넌트 -> children으로 컴포넌트가 전달된다면 컴포넌트를 반환하는 컴포넌트가 됨
+const Container = (props) => {
+  return props.children
+}
+
+export default Container
+```
+
+```
+import Container from '~/Container.js'
+
+const App = () => {
+  return (
+    // children을 반환하므로 React.Fragment와 동일한 기능
+    <Container>
+      <Component1>
+      <Component2>
+    </Container>
+  )
+}
+```
+
+#### 사용자 정의 고차 컴포넌트
+
+### [ Styled Component I ]
+
+#### 스타일 라이브러리
+
+- CSS in JS
+
+```
+- styled-components 라이브러리의 장점
+
+1. CSS -> JavaScript : CSS로 작성된 스타일을 React에서 처리 가능한 JS 스타일 객체로 변경
+2. 고유한 클래스명을 생성(클래스명이 중복되어 덮어써지는 문제가 없음, 중복 문제를 피하기 위해 클래스명을 길게 작성할 필요 없음)
+3. 컴포넌트 안에서 CSS를 관리 (유지보수에 용이)
+4. 간편한 동적 스타일링 가능
+5. 벤더 프리픽스 자동 설정
+```
+
+#### Styled Components 기본 사용법
+
+- 백틱(`) 기호를 사용하여 그 안에 스타일 작업
+
+```
+import styled from 'styled-components'
+
+const Link = styled.a`
+  CSS Style
+`
+
+또는
+
+const Link = styled('a')`
+  CSS Styled
+`
+
+```
+
+#### Styled Components의 작동 원리 (ES6 태그 템플릿)
+
+styled-components는 ES6 Tagged Templates 문법을 사용
+
+#### props 적용
+
+- 보간법(\${})을 사용하여 리액트 컴포넌트처럼 props를 전달받고 이를 사용하여 스타일링 할 수 있음
+
+```
+import styled from 'styled-components'
+
+const AppButton = styled.a`
+  pointer-events: ${(props) => props.notAllow ? 'none' : 'all'}
+  또는
+  pointer-events: ${({notAllow} => notAllow ? 'none': 'all')}
+`
+
+<AppButton >버튼 사용 가능</AppButton>
+<AppButton notAllow>버튼 사용 불가</AppButton>
+
+```
+
+</div>
+</details>
