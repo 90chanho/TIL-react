@@ -2205,3 +2205,181 @@ const AppButton = styled.a`
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 3주차 - 금요일
+
+</summary>
+<div>
+
+### [ HTML VS React 폼 컨트롤 ]
+
+- React에서 폼 컨트롤 방식은 state 속성을 사용하며, 이 값은 setState()를 사용해서 업데이트 한다
+
+```
+import React, {Component} from 'react'
+
+class InputComponent extends Component {
+  // 컴포넌트 상태 설정
+  state = {
+    content: ''
+  }
+  // 입력 값을 받아 상태 업데이트
+  handlerInput = (e) => {
+    this.setState({
+      content: e.target.value
+    })
+  }
+
+  render () {
+    return (
+      <label>
+        {this.props/label}
+        <input
+          type={this.props.type}
+          value={this.state.content}
+          onChange={e => this.handleInput(e)} />
+      </label>
+    )
+  }
+
+}
+
+```
+
+### [ AppInput 컴포넌트 ]
+
+학습 완료
+
+### [ React 폼 멀티플 컨트롤 핸들링 ]
+
+- 하나의 핸들러에서 각 폼을 핸들링 하고 싶을 때, event.target & name 속성을 사용하자
+
+```
+class MultiControlInputs extends Component {
+  state = {
+    register: {
+      email: '',
+      password: ''
+    }
+  }
+
+  handleChange = (e) => {
+    // 이벤트를 실행시킨 요소의 name, value값을 구조 분해 할당
+    const {name, value} = e.target
+    // register라는 변수에 기존 state.register객체와 위에서 구조 분해 할당으로 생성한 name, value를 객체로 만들어 합성
+    const register = Object.assign({}, this.state.register, {[name]: value})
+    // 합성한 객체로 상태 업데이트
+    this.setState({register})
+  }
+
+  render () {
+    return (
+      <Fragment>
+        <input
+          type="email"
+          name="email"
+          aria-label="계정 이메일"
+          value={register.email}
+          onChange={this.handleChange} />
+
+        <input
+          type="password"
+          name="password"
+          aria-label="계정 패스워드"
+          value={register.password}
+          onChange={this.handleChange} />
+      </Fragment>
+    )
+  }
+}
+```
+
+### [ 컨트롤 vs 언 컨트롤 컴포넌트, ref 속성 ]
+
+- select 폼 핸들링
+
+```
+<select
+  // selected와 동일
+  value={this.state.value}
+  // 옵션 선택시 동작
+  onChange={this.handleChange}>
+  <option value="op1">옵션1</option>
+  <option value="op2">옵션2</option>
+  <option value="op3">옵션3</option>
+  <option value="op4">옵션4</option>
+</select>
+```
+
+- multiple selected
+
+```
+state = {
+  // 1개 이상의 값을 담아야 하므로 값은 배열 객체
+  value: []
+}
+
+handleChange = (e) => {
+  const options = Array.from(e.target.children)
+  // 선택된 옵션들만 따로 필터링
+  const selectedOptions = options.filter(option => option.selected)
+  // value값만 따로 반환
+  const selectedOptionsValue = selectedOptions.map(option => option.value)
+  // 상태 업데이트
+  this.setState({value : seletedOptionsValue})
+}
+
+<select
+  // multiple 속성 값은 true로 설정
+  multiple={true}
+  value={this.state.value}
+  onChange={this.handleChange}>
+  <option value="op1">옵션1</option>
+  <option value="op2">옵션2</option>
+  <option value="op3">옵션3</option>
+  <option value="op4">옵션4</option>
+</select>
+```
+
+- Uncontrolled Component : 객체 참조(Ref)를 사용하여 접근하여야 한다
+
+```
+class FileInput extends Component {
+  constructor (props) {
+    super(props)
+    // 'fileInput'이라는 이름으로 ref를 생성
+    this.fileInput = React.createRef()
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    // this.fileInput으로 input 요소에 접근 가능
+    console.log(this.fileInput.current.files[0].name)
+  }
+
+  render () {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          <input
+            type="file"
+            ref={this.fileInput} />  input요소를 위에서 생성한 ref와 연결
+        </label>
+        <button type="submit">
+      </form>
+    )
+  }
+}
+```
+
+### [ React Context를 사용한 데이터 수정 코드 리뷰 ]
+
+학습 완료
+
+</div>
+</details>
