@@ -163,11 +163,21 @@ class 클래스명 extends 참조할 클래스 {
 
 ### [ React 컴포넌트와 요소 ]
 
-React Component(= 함수형 컴포넌트)
+React Component
 
 ```
+// 함수형 컴포넌트
 function App () {
-  return <div>React Element</div>
+  return <div>리액트 컴포넌트</div>
+}
+
+// 클래스형 컴포넌트
+class App extends React.Component {
+  render () {
+    return (
+      <div>리액트 컴포넌트</div>
+    )
+  }
 }
 ```
 
@@ -2380,6 +2390,125 @@ class FileInput extends Component {
 ### [ React Context를 사용한 데이터 수정 코드 리뷰 ]
 
 학습 완료
+
+</div>
+</details>
+
+---
+
+<details>
+<summary>
+
+## 4주차 - 월요일
+
+</summary>
+<div>
+
+### [ 절대경로 임포트 (jsconfig.json 설정) ]
+
+- 상대경로 대신 절대 경로를 사용하여 모듈 파일을 불러오는 방법 (VS Code)
+
+```
+// 프로젝트 루트 경로에 jsoconfig.json 파일을 생성
+// src 폴더 내 파일을 기본 경로로 설정
+
+{
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
+  "include": ["src"]
+}
+```
+
+### [ ReactComponent를 활용한 SVG 이미지 스타일링 & 애니메이션 ]
+
+- SVG 파일을 React 프로젝트에서 사용할 경우 컴포넌트화 하여 사용할 수 있다.
+
+```
+<img> 태그를 사용하면 스타일링 및 애니메이션 적용에 제한이 있는데, 컴포넌트화 하면 문제 없음
+```
+
+### [ SCSS 사용하기 ]
+
+- node-sass 패키지 설치
+
+```
+$ npm i node-sass
+```
+
+### [ CSS 모듈을 사용해 고유한 클래스 이름 생성(스타일 충돌 방지) ]
+
+- 모듈을 사용하면 렌더링 하면서 고유한 클래스명을 생성하여 전역코드에 의해 오염될 우려가 없다
+
+```
+! filename.module.css과 같이 명명해야 모듈로 사용할 수 있다
+
+// 예제
+import style from './Button.module.css'
+
+class Button extends Component {
+  render() {
+    return (
+      <button className={style.button}>...</button>
+    )
+  }
+}
+```
+
+- scss도 똑같이 사용 가능하다
+
+### [ craco를 활용해 설정 덮어쓰기 (Sass 소스맵 설정) ]
+
+학습 완료
+
+### [ classNames() 유틸리티 모듈 활용 ]
+
+- CSS 클래스 속성을 동적 또는 조건처리하여 결합할 수 있는 라이브러리
+
+```
+// 패키지 설치
+$ npm i classnames
+```
+
+```
+import classNames from 'classnames'
+
+// class 추가
+const MergeClasses = ['default-class', props.class]
+
+// class 조건처리
+const MergeClasses = ['default-class', {
+  'is-active': condition1
+  'is-disabled': condition2
+  ...
+}]
+```
+
+- 모듈 CSS에 적용
+
+```
+import classNames from 'classnames/bind'
+import styles from './LecturerEditDialog.module.css'
+
+const cx = classNames.bind(styles)
+
+const ButtonComponent from Component {
+  render() {
+    const classes = cx({
+      'dialog': true,
+      'active': props.isActive
+     })
+
+    return (
+      <button className={classes}></button>
+    )
+  }
+}
+```
+
+### [ React 컴포넌트 / 유닛 테스트 디버깅 ]
+
+- 학습 완료
 
 </div>
 </details>
