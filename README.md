@@ -2512,3 +2512,266 @@ const ButtonComponent from Component {
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 4주차 - 화요일
+
+</summary>
+<div>
+
+### [ 스타일 확장 ]
+
+```
+const Button = styled.button`
+  CSS style
+`
+
+const ExtendsButton = styled(Button)`
+  more Css style
+`
+```
+
+### [ 컴포넌트 스타일 확장 ]
+
+- className 속성을 전달 받도록 설정해야 적용이 된다.
+
+```
+const RadioButton (props) {
+  return (
+    <input type="radio" className={props.className} />
+  )
+}
+
+const StyledRadioButton = styled(RadioButton)`
+  more CSS style
+`
+```
+
+### [ 컴포넌트 스타일 래퍼]
+
+- 컴포넌트 js 파일내에서 스타일 코드를 작업하는 것이 유지보수에 좋음
+
+* 단, 컴포넌트 생성 코드 안에서 작업하는 것은 좋지 않음
+
+### [ 가상 클래스/요소, 중첩 규칙 ]
+
+```
+const Container = styled.div`
+  .h1 {
+    text-decoration: underline;
+    color: red;
+  }
+
+  p {
+    color: #000;
+  }
+
+  ::before {
+    content: "-";
+  }
+
+  ::after {
+    content: "!";
+  }
+`
+```
+
+### [ 정적/동적 props 할당 ]
+
+- styled-components의 attrs 생성자를 사용하면 정적 또는 동적 props를 정의할 수 있다
+
+```
+const AppInput = styled.input.attrs(props => {
+  type: props.types || "text",
+  name: props.name || null,
+  color: primary || '#06f',
+  margin: size || '1em',
+  padding: size || '1em'
+})`
+  margin: ${ ({margin}) => margin };
+  padding: ${ ({padding}) => padding };
+  color: ${ ({color}) => color };
+`
+```
+
+### [ 믹스인 (Mixin) ]
+
+- 공통으로 사용되는 CSS는 Mixin 방식을 사용하여 작업할 수 있다
+
+```
+import styled, {css} from 'styeld-components'
+
+// css 모듈을 사용하여 공통 스타일 작업
+const ButtonCommonStyle = css.`
+  border: 1px solid red;
+  color: red;
+  padding: 10px;
+  box-sizing: border-box;
+`
+
+const BigButton = styled.button`
+  ${ButtonCommonStyle}
+  min-width: 100px;
+  backgournd-color: red;
+`
+
+const smallButton = styled.button`
+  ${ButtonCommonStyle}
+  min-width: 50px;
+`
+```
+
+### [ 애니메이션 ]
+
+- styled-components는 keyframes 모듈을 사용해 애니메이션 작업을 할 수 있다.
+
+```
+import styled, {keyframes} from 'styled-components'
+
+const keyframes1 = keyframes`
+  0% { transform: translateY(0) }
+  25% { transform: translateY(-20px) rotate(20deg) }
+  50% { transform: translateY(10px) }
+  75% { transform: translateY(-15px) rotate(-20deg) }
+  100% { transform: translateY(0) }
+`
+
+const HatIcon = styled.i`
+  font-size: 100px;
+  animation: ${keyframes1} 3s infinite cubic-bezier(0.35, 0.29, 0.4, 0.8);
+`
+```
+
+### [ 글로벌 스타일 ]
+
+- styled-components의 createGlobalStyle 모듈을 사용하면 전역 스타일을 적용할 수 있다
+
+* 해당 스타일 컴포넌트는 자식 컴포넌트를 허용하지 않으며, 리액트 트리의 최상단에 위치시키면 된다.
+
+```
+import styled, {createGlobalStyle} from 'styled-components'
+
+// 글로벌 스타일 정의
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    font: 1rem/1.5 "Spoqa Han Sans", Sans-Serif;
+    background: ${ ({darken}) => darken ? '#162442' : '#dee1e6' }
+    color: ${ ({darken}) => darken ? '#dee1e6' : '#162442' }
+  }
+  a img {
+    border: 0;
+  }
+`
+
+<GlobalStyle darken />
+```
+
+### [ 테마 (Theme) ]
+
+- 스타일 컴포넌트에 테마 적용1 : attrs 모듈 사용
+
+```
+import styled from 'styled-components'
+
+const AppButton = styled.attrs(theme => ({
+  theme: 'main' in theme ? theme : { main: '#06f' }
+}))`
+  color: ${({theme}) => theme.main}
+`
+
+```
+
+- 스타일 컴포넌트에 테마 적용2 : ThemeProvider 모듈 사용
+
+```
+// theme.js
+
+export default {
+  lightMode: {
+    fgColor: '#0e6ef0',
+    bgColor: '#efefef'
+  },
+  darkMode: {
+    fgColor: '#f0ce1e',
+    bgColor: '#162442'
+  }
+}
+```
+
+```
+import React, {Component} from 'react'
+import styled, {ThemeProvider} from 'styled-components'
+import theme from './theme.js'
+
+class App extends Componetns {
+  state = {
+    themeMode: "light"
+  }
+
+  render() {
+    return (
+      {
+        if (this.state.themeMode === "light") {
+          <ThemeProvider theme={theme.lightMode}>
+            <App />
+          </ThemeProvider>
+        } else {
+          <ThemeProvider theme={theme.darkMode}>
+            <App />
+          </ThemeProvider>
+        }
+      }
+    )
+  }
+}
+
+render(<App />, document.getElementById('root'));
+```
+
+- 리액트 컴포넌트에 테마 적용 : withTheme 모듈 사용
+
+```
+import React, {Component} from 'react'
+import { ThemeProvider } from 'styled-components'
+import theme from './theme';
+import AppButton from './AppButton';
+
+class App extends Components {
+  ...
+
+  render() {
+    return (
+      <ThemeProvider theme={theme.lightMode}>
+        // ThemeProvider를 이용하여 theme를 전달
+        <AppButton />
+      </ThemeProvider>
+    )
+  }
+}
+```
+
+```
+// AppButton.js
+import React, {Component} from 'react'
+import { withTheme } from 'styled-components'
+
+
+class AppButton extends Component {
+  render() {
+    return (
+      ...JSX
+    )
+  }
+}
+
+export default withTheme(AppButton)
+
+```
+
+</div>
+</details>
