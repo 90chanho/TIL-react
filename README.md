@@ -2775,3 +2775,114 @@ export default withTheme(AppButton)
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 4주차 - 수요일
+
+</summary>
+<div>
+
+### [Redux 라이브러리]
+
+#### Redux가 필요한 이유
+
+- 규모가 큰 프로젝트일 수록 상태(state)를 관리하는데 어려움이 있다.
+
+* context를 사용할 수 있지만 규모가 큰 프로젝트일 경우 코드가 복잡해지고 유지보수가 어렵다.
+
+* Redux는 하나의 상태 저장소(store)에서 상태를 관리하기 때문에 보다 설계적(?)이다
+
+#### [ Redux의 작동 흐름 (3원칙) ]
+
+- 애플리케이션의 상태는 모두 한 곳에서 집중 관리된다(동기화 필요 없음)
+
+* 상태 값은 불변 데이터이며, 오직 '액션'만이 상태 값을 변경을 '요청'할 수 있다(예측 가능)
+
+* 리듀서(함수)를 통해 상태의 최종 값만 설정(단순화)
+
+#### [ Redux의 아키텍처 (설계 구성 방식) ]
+
+- 컴포넌트는 스토어(store)에 저장된 상태(state)를 구독(subscription)하여, 상태가 변경되면 상태와 관련된 컴포넌트가 다시 렌더링된다.
+
+* 상태(state)가 변경되기 위해서는 사용자(User)가 상태 값을 변경시키는 이벤트를 발생시키고, 이를 감지하여 상태 변경 액션을 보낸다(dispatch).
+
+* 상태 변경 시도를 하게 되면 액션은 미리 정의된 상태와 액션 타입을 리듀서에게 전달하여 '상태 변경을 요청'한다
+
+* 리듀서는 매개변수로 '상태', '액션'을 전달 받아 새로운 상태를 스토어에 반환하여 '상태를 변경'한다.
+
+* 스토어는 상태가 변경되었음을 알리고(트리거), 해당 상태를 구독하고 있는 컴포넌트가 이를 인지하여 DOM이 다시 렌더링 된다.
+
+#### [ 스토어 객체 생성 — createStore() 메서드 ]
+
+```
+$ npm i redux
+```
+
+```
+import { createStore } from 'redux'
+
+const reduce = (state, action) => { ... }
+
+const store = createStore(reduce)
+```
+
+#### [ 상태(state) 가져오기 — getState() 메서드 ]
+
+```
+const initState = '초기 상태 값'
+
+const reduce = (state = initState, action) => {
+  return state
+}
+
+const store = createStore(reduce)
+
+store.getState() // '초기 상태 값'
+```
+
+#### [ 액션(action) — type, payload 속성을 가진 객체 ]
+
+- 액션은 type을 가지고 있는 객체이다.
+
+* type은 액션이 어떠한 동작을 취할 지를 예상할 수 있는 값이다
+
+* type은 상수이다
+
+* 상태 값을 변경하는 유일한 방법은 '액션을 보내는 것(Dispatching Action)'
+
+```
+store.dispatch(action)
+```
+
+#### [ 리듀서(reducer) — 순수한 함수 ]
+
+- 리듀서? 애플리케이션의 상태를 교체하는 함수. 이전 상태(prevStste)를 새로운 상태(state)로 교체(return)한다.
+
+* 리듀서는 순수한 함수? 반환(reture) 값이 전달 인자(argument) 값에만 의존하는 함수.
+
+```
+- 전달 받은 매개변수 state, action에 변형을 가하면 안 된다.
+- 네트워킹(API 호출 <- 비동기 통신) 또는 라우팅을 변경하면 안 된다.
+- 반환 값은 오직 새로운 상태(state).
+```
+
+#### [ Redux 스토어 모듈 관리 ]
+
+학습 완료
+
+#### [ 상태 업데이트 구독과 취소 — subscribe() 메서드 ]
+
+- .subscribe() 메서드는 구독을 취소할 수 있는 unscribe 함수를 반환한다
+
+```
+const unSubscribe = store.subscribe(() => { ... })
+
+unSubscribe() // 구독 취소
+```
+
+</div>
+</details>
