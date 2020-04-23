@@ -2886,3 +2886,111 @@ unSubscribe() // 구독 취소
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 4주차 - 목요일
+
+</summary>
+<div>
+
+### [리듀서 함수]
+
+#### TodoReducer 함수 — 작성
+
+실습 완료
+
+#### TodoReducer 함수 — 유닛 테스트
+
+실습 완료
+
+### [Redux 설치, 패턴 리뷰]
+
+#### Redux 설치/활용
+
+- 스토어 및 리듀서 생성
+
+```
+import {createStore} from 'redux'
+
+// 스토어 생성
+const store = createStore(reducer)
+
+// 리듀서(함수) 생성
+initState = 0
+const reducer = (prevState = initState, action) => {
+  switch (action.type) {
+    case: 'INCREASE'
+      const newState = prevState + 1
+      return newState
+    case: 'DECREASE'
+      const newState = prevState - 1
+      return newState;
+    default:
+      return prevState
+  }
+}
+```
+
+- 상태 가져오기
+
+```
+store.getState()
+```
+
+- 액션 전달
+
+```
+store.dispatch(action)
+```
+
+- 변경 감지 : 상태 변경이 감지되면 전달된 인자(함수)를 실행
+
+```
+const alarm = () => {
+  alert('상태가 변경되었습니다')
+}
+
+store.subscribe(alarm)
+```
+
+- 변경 감지 핸들링
+
+```
+document.body.addEventListener('click', () => {
+  store.dispatch({type: 'INCREASE'})
+})
+```
+
+#### Redux 패턴 리뷰
+
+- 핵심 패턴 4가지
+
+```
+1. 스토어 생성
+const store = createStore(reducer)
+
+2. 스토어 상태 반환
+store.getState()
+
+3. 스토어 상태 변경 전달(액션)
+store.dispatch(action)
+// 구독 중인 리스너를 실행시키는건 .dispatch()이다.
+
+4. 스토어 상태 변경 감지(리스너)
+const unsubscribe = store.subscribe(listener)
+// subscribe()는 unsubscribe 함수를 반환한다
+```
+
+[질문1]
+리덕스를 사용하는 이유는 store라는 '단 하나의 저장소에서 모든 상태를 관리하기 위함이다'라고 이해했는데,
+
+store를 생성할 때 배열이나 객체가 아닌 함수(리듀서)를 전달해야 하므로 하나의 리듀서 함수만 전달할 수 있을텐데
+
+그럼 프로젝트 내에서 스토어는 하나이므로 하나의 리듀서로 모든 상태를 변경하는게 맞나요??
+
+</div>
+</details>
