@@ -2994,3 +2994,174 @@ store를 생성할 때 배열이나 객체가 아닌 함수(리듀서)를 전달
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 4주차 - 금요일
+
+</summary>
+<div>
+
+### [React 앱 + Redux]
+
+#### 실습 예제 다운로드 및 의존 패키지 설치, 프로젝트 실행
+
+- 확인
+
+#### 스토어, 리듀서 함수 생성
+
+- 확인
+
+#### App 컴포넌트 상태, 메서드를 리듀서 함수 상태, 스위칭 처리
+
+- 확인
+
+#### 스토어의 상태 업데이트 구독 후, UI를 다시 렌더링 처리
+
+- 확인
+
+#### 루트 리듀서 (여러 개의 리듀서 병합)
+
+- 하나의 스토어에서 여러 개의 리듀서를 사용할 때 사용
+
+```
+// store/reducers/index.js
+
+import { combineReducer } from 'redux'
+
+// 병합할 리듀서들
+import { counterReducer } from './counterReducer/index.js'
+import { todoReducer } from './toroReducer/index.js'
+import { testReducer } from './testReducer/index.js'
+
+const rootReducer = combineReducer({
+  counterReducer,
+  todoReducer,
+  testReducer
+})
+
+export default rootReducer
+```
+
+- 병합한 리듀서로 스토어 생성
+
+```
+// store/index.js
+
+import {createStore} from 'redux'
+import rootReducer from './reducers/'
+
+const store = createStore(rootReducer)
+```
+
+- 필요한 리듀서 사용
+
+```
+// Todo.js
+
+import store from './store/index.js'
+
+const todoReducer = store.getState().todoReducer
+
+// Count.js
+
+import store from './store/index.js'
+
+const CountReducer = store.getState().CountReducer
+```
+
+#### Top-Down 방식의 props 대신, Redux store 활용
+
+- 확인
+
+#### 액션 크리에이터 활용 (dispatch + action creator)
+
+- 기존 방식
+
+```
+// App.js
+import store from './store/index.js'
+import {actionType1} from './store/actions/actionTypes'
+
+.
+.
+.
+
+render() {
+  return (
+    ...
+    <button onClick={() => store.dispatch({type: actionType1, payload: 'value1'})}></button>
+    ...
+  )
+}
+
+```
+
+- 액션 크리에이터 방식 적용
+
+```
+// App.js
+import store from '../store/index.js'
+import {Action1} from '../store/actions/index.js'
+
+.
+.
+.
+
+render() {
+  return (
+    ...
+    <button onClick={() => store.dispatch(Action1('value'))}>
+    ...
+  )
+}
+
+
+// store/actions/index.js
+import store from '../index.js'
+import {actionType1} from './actionTypes'
+
+export const Action1 = (value) = {
+  return ({ type: actionType1, payload: value })
+}
+
+```
+
+- Flux 방식 적용 (리덕스팀에서 권고하지 않는 기법)
+
+```
+// App.js
+import {boundAction1} from './store/actions/index.js'
+
+.
+.
+.
+
+render () {
+  return(
+    ...
+    <button onClick={() => boundAction1('value')}>
+    ...
+  )
+}
+
+
+// store/actions/index.js
+import store from '../index.js'
+import {actionType1} from './actionTypes'
+
+const Action1 = (value) = {
+  return ({ type: actionType1, payload: value })
+}
+
+export const boundAction1 = (value) = {
+  return store.dispatch({ type: actionType1, payload: value })
+}
+
+```
+
+</div>
+</details>
