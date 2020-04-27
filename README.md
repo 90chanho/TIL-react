@@ -3165,3 +3165,54 @@ export const boundAction1 = (value) = {
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 5주차 - 월요일
+
+</summary>
+<div>
+
+### [학습한 Thunk 통합]
+
+- Redux Thunk?
+
+```
+정의 : Redux의 기능을 확장하는 Middleware
+목적 : store의 기능을 확장하고 store와 인터랙션 하는 비동기(async) 로직을 action에 포함하여 작성할 수 있도록 만들어 준다.
+개요 : Redux Thunk를 사용하면 'dispatch 및 state를 매개변수로 전달 받는 함수'를 반환하는 액션 생성 함수로 작성할 수 있다.
+       Redux Thunk는 액션 전달을 ​​지연(delay) 시키거나 특정 조건이 일치하는 경우에만 전달하는데 사용될 수 있다.
+```
+
+- Thunk?
+
+```
+정의 : 식(expression)을 래핑하여 수행을 지연시키는 함수
+```
+
+- Redux Thunk 사용
+
+```
+$ npm i redux-thunk
+```
+
+```
+// Redux Thunk를 Redux 스토어와 통합하려면 applyMiddleware()를 사용해야 한다.
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+
+import rootReducer from './reducers/index';
+
+// 스토어 생성 및 미들웨어 적용
+const store = createStore(rootReducer, applyMiddleware(thunk));
+```
+
+### [비동기 액션 생성 함수 & 컴포넌트 반영 코드 리뷰]
+
+확인
+
+</div>
+</details>
