@@ -3335,5 +3335,16 @@ ReactDOM.render(<Router>...</Router>, document.getElementById('reactApp'))
 <Route path="/" sensitive>...</Route>
 ```
 
+[질문1]
+
+- Redux 내용 중 여러 개의 리듀서를 하나로 합친 경우(combineReducer)에도 다음과 같이 dispatch를 해주는 데
+
+```
+store.dispatch({type: '', payload: ''})
+```
+
+어떤 리듀서를 따로 설정하지 않는 걸 보면 action의 상수 값은 리듀서가 다르다 하더라도 겹치면 안되는 게 맞나요?
+예를 들면 A와 B라는 리듀서에서 'INCREASE_COUNT'라는 actionType을 중복하여 사용하면 안되는 건가요?
+
 </div>
 </details>
