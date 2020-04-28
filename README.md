@@ -3216,3 +3216,124 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 5주차 - 화요일
+
+</summary>
+<div>
+
+### [ SPA 라이브러리 ]
+
+- 하나의 페이지에서 마치 여러 개의 페이지(MPA)을 보는 처럼 구현하는 것
+
+* SPA를 구현하려면
+
+```
+1. URL은 페이지를 식별하는 주소로 변경 되어야 한다
+2. 웹 브라우저의 이전/다음 페이지로 이동 버튼을 사용하여 페이지가 변경되도록 히스토리 기능이 요구된다.
+3. 직적 url을 주소창에 입력했을 때 해당 화면이 그려져야 한다.
+
+-> react-router가 이러한 기능들을 제공해 줌
+```
+
+### [ 라우터? 라우트? 라우팅? ]
+
+- route[라우트, 루트], router[라우터]
+
+```
+route란? 길
+router란? 길을 찾아내는 역할
+routing이란? 길을 찾는 행위
+```
+
+### [ BrowserRouter & HashRouter 컴포넌트 ]
+
+- 웹에서 사용 가능한 BrowserRouter 와 HashRouter
+
+```
+- BrowserRouter는
+: HTML5의 history 기능을 사용할 수 있다
+
+- HashRouter는
+: history 기능이 없는 구형 브라우저에서 사용 가능하다
+: location.key와 location.state 기능을 사용할 수 없다
+```
+
+- 사용 법
+
+```
+import { BrowserRouter as Router } from 'react-router-dom'
+또는
+import { BrowserRouter as Router } from 'react-router-dom'
+
+const App = () => {
+  <Router>
+    ...
+  </Router>
+}
+
+또는
+
+ReactDOM.render(<Router>...</Router>, document.getElementById('reactApp'))
+```
+
+- GitHub 페이지에 배포할 경우에는 HashRouter를 사용해야 한다
+
+### [ Route 컴포넌트 Part 1 ]
+
+- Route 컴포넌트
+
+```
+- path를 속성 사용
+- exact(boolean) 속성
+- component 속성
+```
+
+- 렌더링 방법 3가지
+
+```
+1. <Route compoenet={컴포넌트}>
+
+2. <Route render> : 컴포넌트를 인라인으로 작업
+<Route render={() => <div>인라인 컴포넌트</div>} />
+
+3. <Route children> 함수 : 매칭될 경우, 자식 컴포넌트를 렌더링 할 때 사용한다.
+
+```
+
+### [ Route 컴포넌트 Part 2 ]
+
+- Route 컴포넌트의 Props
+
+```
+1. history
+2. location
+3. match
+```
+
+- 정확한 라우팅 설정
+
+```
+<Route path="/" exact>...</Route>
+```
+
+- 엄격한 경로 구분 설정
+
+```
+// exact 속성과 함께 사용
+<Route path="/" exact strict>...</Route>
+```
+
+- path의 대소문자 구분 설정
+
+```
+<Route path="/" sensitive>...</Route>
+```
+
+</div>
+</details>
