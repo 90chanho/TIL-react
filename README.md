@@ -3348,3 +3348,128 @@ store.dispatch({type: '', payload: ''})
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 5주차 - 수요일
+
+</summary>
+<div>
+
+### [ Switch 컴포넌트 ]
+
+- Switch : URL이 일치하는 Route 중에서 첫번째 Route를 렌더링
+
+```
+import { Route, Switch } from 'react-router-dom'
+
+<Switch>
+  <Route path="/page1" exact component={Comp1}>
+  <Route path="/page2" exact component={Comp2}>
+  ...
+  <Route path="/*" render={() => <div>Page Not Found 404</div>} />
+</Switch>
+
+404 페이지 적용
+: Route에 exact 속성을 적용하고 일치하는 URL이 없는 모든 경우에 적용할 수 있도록 Switch 컴포넌트로 감싼다.
+```
+
+### [ Link 컴포넌트 ]
+
+- Link : HTML의 a 요소와 동일한 기능이지만, 페이지가 새로 로드되지 않는다.
+
+```
+import { LInk } from 'react-router-dom'
+
+<Link to="path">이동</Link>
+```
+
+- pathname, hash, search, state값을 to 객체 형태로 넘겨 줄 수 있다
+
+```
+<Link to={{
+  pathname: '/lecture',
+  search: '?search',
+  hash: '#hash',
+  state: {
+    isAuth: false
+  }
+}}>대시보드</Link>
+```
+
+- innerRef
+
+```
+<Link to="/" innerRef={node => {
+  // 마운트 된 DOM 요소를 참조할 수 있다.
+}}>
+```
+
+### [ NavLink 컴포넌트 ]
+
+- NavLink = Link 컴포넌트 + 활성화 스타일
+
+```
+import {NavLink} from 'react-router-dom'
+
+<nav>
+  <ul>
+    <NavLink exact to="/sub1">서브페이지1</NavLink>
+    <NavLink exact to="/sub2">서브페이지2</NavLink>
+    <NavLink exact to="/sub3">서브페이지3</NavLink>
+  </ul>
+</nav>
+```
+
+- 활성화 되는 경우 클래스가 적용되며, 클래스명은 수정 가능, 인라인 스타일 적용도 가능
+
+```
+// 활성화 클래스명 변경
+<NavLink path="/" activeClassName="is-active">sub1</NavLink>
+
+// 인라인 스타일 적용
+<NavLink path="/" activeStyle={{color: red}}>sub1</NavLink>
+```
+
+- 활성화 되었을 때 동작 실행 가능
+
+```
+<NavLink path="/" isActive={(match, location) => {...}}>
+```
+
+### [ Redirect 컴포넌트 ]
+
+- Redirect
+
+```
+import {Redirect} from 'react-router-dom'
+
+<Switch>
+  <Route path="/page-not-found" component="pageNotFound">
+  <Redirect to="/page-not-found" />
+</Switch>
+
+
+- to 객체를 통해 path, hash, search, state값 전달 가능
+```
+
+### [ Route 컴포넌트 props 전달 ]
+
+```
+<Router>
+  <Switch>
+    <Route path="/sub1" render={(props) => <Component customProp="value" {...props} />} />
+  </Switch>
+</Router>
+```
+
+### [ Route 컴포넌트 매개변수(옵션 포함), 쿼리 스트링 ]
+
+- 학습 완료
+
+</div>
+</details>
+```
