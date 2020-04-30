@@ -3472,4 +3472,134 @@ import {Redirect} from 'react-router-dom'
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 5주차 - 목요일
+
+</summary>
+<div>
+
+### [ 중첩된 라우팅 ]
+
+- 중첩된 라우팅?
+
 ```
+www.example.com/path에서 depth가 더 추가된 route.
+www.example.com/path/content1
+www.example.com/path/content2
+www.example.com/path/content3
+...
+```
+
+- 예제
+
+```
+export Component = ({match}) => {
+  // 전달 받은 props 중 match에서 url 값을 빼낸다.
+  const { url } = props.match
+
+  return (
+    <SubComponent>
+      // 빼낸 url값과 나머지 path값을 설정
+      <Link to={`${url}/>/content1`}>컨텐츠1</Link>
+      <Link to={`${url}/>/content2`}>컨텐츠2</Link>
+      <Link to={`${url}/>/content3`}>컨텐츠3</Link>
+
+      // 빼낸 url과 나머지 path 컨텐츠 설정
+      // 뒤에 '?'가 붙으면 option이란 의미로 해당 path가 없더라도 상관없다, 만약 '?'가 없으면 해당 path의 depth까지 설정하지 않을 경우 화면이 보이지 않음
+      <Route path={`${url}/:content/:category?`}></Route>
+    </SubComponent>
+  )
+}
+
+```
+
+### [ 보호된 라우팅 ]
+
+- 보호된 라우팅이란?
+
+```
+유료 고객들만 볼 수 있는 페이지나 유저 정보를 담고 있는 민감한 페이지를 단순 url로 접근할 수 없도록 설정하는 것
+```
+
+step1 : auth 상태 데이터 필요
+
+```
+- 사용자의 로그인 여부를 확인할 수 있는 auth 상태 데이터가 필요하다
+- 유저가 로그인을 하면 dispatch를 통해 isAuth 상태를 true로 변환시킨다
+```
+
+step2 : 보호할 컴포넌트를 감싸는 컴포넌트(ex. ProtectedRoute)를 생성
+
+```
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import auth from './auth';
+
+const ProtectedRoute = ({component: Component, ...rest}) => (
+  <Route {...rest} render={(props) => {
+    // 인증 여부를 확인
+    auth.isAuth ?
+      // props로 렌더링 할 컴포넌트를 전달 받는다
+      <Component {...props} /> :
+      // 인증 안 되었을 경우 리다이렉트
+      <Redirect to={{
+        pathname: '/',
+        state: {from: props.location}
+      }} />
+  }} />
+)
+
+export default ProtectedRoute;
+
+```
+
+step3 : 인증이 필요한 컨텐츠를 인증 컴포넌트로 작업
+
+```
+<Router>
+  <Switch>
+    <Route path="/" component={Landing} /> // 인증이 필요하지 않은 페이지
+    <ProtectedRoute path="/admin" component={Admin} /> // 인증이 필요한 페이지
+  </Switch>
+</Router>
+
+```
+
+### [ Redux 통합 ]
+
+- react-redux와 react-router를 같이 사용하는 경우
+
+```
+// react-router-dom의 withRouter 모듈을 사용해야 한다
+import { withRouter } from 'react-router-dom'
+
+...
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(컴포넌트))
+
+```
+
+- Provider와 Router
+
+```
+import { Provider } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
+import store from './store'
+
+const App = () => {
+  <Provider store={store}>
+    <Router>
+      <Route path="/" component={Home} exact />
+    </Router>
+  </Provider>
+}
+
+```
+
+</div>
+</details>
