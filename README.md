@@ -3603,3 +3603,94 @@ const App = () => {
 
 </div>
 </details>
+
+---
+
+<details>
+<summary>
+
+## 6주차 - 월요일 / 불변 데이터 관리
+
+</summary>
+<div>
+
+### [ 배열 아이템 추가 ]
+
+- 상태 데이터는 immutable(변경 불가능한) 데이터이기 때문에 새로운 데이터를 다음 상태로 반환해야 한다.
+
+* 따라서 배열에 아이템을 추가하고 싶은 경우에는 아래와 같이 기존 데이터를 변경하지 않고 새로운 데이터를 반환하는 방식으로 작성해야 한다.
+
+```
+const addItem = (list, newItem) => {
+  return list.concat(newItem)
+  // 또는
+  return [...list, newItem]
+}
+```
+
+### [ 배열 아이템 제거 ]
+
+- 배열 아이템 추가와 동일하게 기존 데이터를 변경하지 않고 새로운 데이터를 반환하는 방식으로 작성해야 한다
+
+```
+const removeItem = (list, index) => {
+  return list.filter((item, i) => {
+    return i !== index
+  })
+}
+```
+
+### [ 배열 아이템 변경 ]
+
+- 배열 아이템 추가, 변경과 동일하게 기존 데이터를 변경하지 않고 새로운 데이터를 반환하는 방식으로 작성해야 한다
+
+```
+const changeItem = (list, index, newItem) => {
+  return [...list.slice(0, index), newItem, ...list.slice(index + 1)]
+  // 또는
+  return list.map((item, i) => (i === index ? newItem : item)) // 추천
+}
+```
+
+### [ 객체 속성 변경 ]
+
+- 객체 또한 기존 데이터를 변경하지 않고 새로운 데이터를 반환하는 방식으로 작성해야 한다.
+
+```
+const changePropInObject = (o, prop, value) => {
+  return {
+    ...o,
+    [prop]: value
+  }
+}
+```
+
+### [ 얕은 동결 vs 깊은 동결 ]
+
+- 얕은 동결(shallow freeze)
+
+```
+Object.freeze(obj)
+```
+
+- 깊은 동결(deep freeze)
+
+```
+const deepFreeze = (obj) => {
+  // 객체 속성 이름 집합 반환
+  const propsNames = Object.getOwnPropertyNames(obj)
+  // 객체 속성 이름 순환 처리
+  for (let name of propNames) {
+    // 값 = 객체[속성]
+    let value = obj[name]
+    // 객체[속성] = 새로운 값으로 변경 (value가 객체 유형인 경우 재귀 함수 처리)
+    obj[name] = value && typeof value === 'object' ?
+      : deepFreeze(value) : value
+    // 객체 동결(재귀 함수에서는 객체. 속성인 객체 또한 동결)
+    return Object.freeze(obj)
+  }
+}
+```
+
+</div>
+</details>
